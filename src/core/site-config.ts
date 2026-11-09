@@ -27,7 +27,7 @@ export function slotOf(placement: AdPlacement): string {
 }
 
 /** 联系邮箱，AdSense 审核会检查「能否联系到站方」 */
-export const CONTACT_EMAIL = ((env.VITE_CONTACT_EMAIL as string | undefined)?.trim() || 'hello@ztsite.com')
+export const CONTACT_EMAIL = (env.VITE_CONTACT_EMAIL as string | undefined)?.trim() || 'admin@lxzt.fun'
 
 /** 站点运营者署名，用在关于页与条款页 */
 export const SITE_OWNER = ((env.VITE_SITE_OWNER as string | undefined)?.trim() || 'ZT 折腾簿')

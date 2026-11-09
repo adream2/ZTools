@@ -9,7 +9,7 @@ import BaseTextarea from '@/components/ui/BaseTextarea.vue'
 import Field from '@/components/ui/Field.vue'
 import { toastError } from '@/core/toast'
 
-const text = ref('https://ztsite.com')
+const text = ref('https://ztools.lxzt.fun')
 const options = ref<QrOptions>({ ...DEFAULT_OPTIONS })
 
 const svg = computed(() => {

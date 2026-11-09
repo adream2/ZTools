@@ -10,7 +10,7 @@ import Field from '@/components/ui/Field.vue'
 
 const title = ref('ZT 工具箱')
 const body = ref('120 个在线工具，全部在浏览器本地完成\n免注册、数据不出端')
-const footer = ref('ztsite.com')
+const footer = ref('ztools.lxzt.fun')
 const size = ref('1080x1080')
 const theme = ref('midnight')
 const fontSize = ref('44')
