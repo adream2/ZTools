@@ -3,9 +3,26 @@ import type { ToolCategory } from './types'
 /** 品牌名：只改这一处（同时记得改 vite.config.ts 里的 manifest 与 index.html 标题） */
 export const APP_NAME = 'ZT 工具箱'
 export const APP_SHORT_NAME = '工具箱'
-export const APP_DESC = '纯本地运行的中文在线工具箱，26 个工具，数据不出浏览器。'
+export const APP_DESC = '纯本地运行的中文在线工具箱，120 个工具，数据不出浏览器。'
 
-export const REPO_URL = 'https://github.com/'
+/** 源码仓库 */
+export const REPO_URL = 'https://github.com/adream2/ZTools'
+
+export interface SiteLink {
+  name: string
+  url: string
+  desc: string
+}
+
+/** 同一作者的其它站点，页脚与关于页共用 */
+export const SITE_LINKS: SiteLink[] = [
+  { name: 'lxzt.fun', url: 'https://lxzt.fun', desc: '网址导航' },
+  { name: 'ZT 折腾簿', url: 'https://www.ztsite.com', desc: '折腾笔记与博客' },
+  { name: 'KeeTools', url: 'https://keetools.ztsite.com', desc: '另一套在线工具集' },
+  { name: 'IP 查询', url: 'https://ip.lxzt.fun', desc: 'IP 归属地与网络信息' },
+  { name: 'AI 打字', url: 'https://aidazi.lxzt.fun', desc: 'AI 辅助写作' },
+  { name: '网盘搜索', url: 'https://pansou.lxzt.fun', desc: '网盘资源搜索' },
+]
 
 export const CATEGORIES: ToolCategory[] = [
   {

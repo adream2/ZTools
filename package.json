@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "description": "纯静态中文在线工具箱，支持 PWA，可部署到 Cloudflare Workers / EdgeOne Pages / GitHub Pages",
+  "license": "MIT",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",

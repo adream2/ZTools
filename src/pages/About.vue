@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import ProsePage from '@/components/layout/ProsePage.vue'
-import { APP_NAME } from '@/core/config'
+import { APP_NAME, REPO_URL, SITE_LINKS } from '@/core/config'
 import { VISIBLE_TOOLS } from '@/core/registry'
 import { CONTACT_EMAIL, SITE_OWNER, SITE_SINCE } from '@/core/site-config'
 </script>
@@ -49,6 +49,26 @@ import { CONTACT_EMAIL, SITE_OWNER, SITE_SINCE } from '@/core/site-config'
       如果你发现有工具结果不对，欢迎指出，我通常会在几天内修。
     </p>
 
+    <h2>其他站点</h2>
+    <p>同一作者维护的其它站点，各有侧重：</p>
+    <ul class="sites">
+      <li v-for="site in SITE_LINKS" :key="site.url">
+        <a :href="site.url" target="_blank" rel="noopener noreferrer">{{ site.name }}</a>
+        <span class="sites__desc">{{ site.desc }}</span>
+      </li>
+    </ul>
+
+    <h2>源码与许可</h2>
+    <p>
+      源码托管在 <a :href="REPO_URL" target="_blank" rel="noopener noreferrer">GitHub</a>，
+      采用 <strong>MIT 协议</strong>：可以自由使用、修改、二次分发甚至商用，
+      只需保留原始的版权声明与许可声明。
+    </p>
+    <p>
+      换句话说，拿去用、拿去改、拿去部署都行，别把作者署名抹掉就好。
+      如果这个项目帮到了你，给仓库点个 Star 是最省事的支持方式。
+    </p>
+
     <h2>联系方式</h2>
     <p>
       邮件：<a :href="`mailto:${CONTACT_EMAIL}`">{{ CONTACT_EMAIL }}</a>
@@ -60,3 +80,22 @@ import { CONTACT_EMAIL, SITE_OWNER, SITE_SINCE } from '@/core/site-config'
     <p class="u-xs u-dim">© {{ SITE_SINCE }}–{{ new Date().getFullYear() }} {{ SITE_OWNER }}</p>
   </ProsePage>
 </template>
+
+<style scoped>
+.sites {
+  list-style: none;
+  padding-left: 0 !important;
+  display: grid;
+  gap: 7px;
+}
+.sites li {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.sites__desc {
+  font-size: var(--fs-xs);
+  color: var(--c-text-3);
+}
+</style>
