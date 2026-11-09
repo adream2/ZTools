@@ -16,11 +16,11 @@ export interface SiteLink {
 
 /** 同一作者的其它站点，页脚与关于页共用 */
 export const SITE_LINKS: SiteLink[] = [
-  { name: 'lxzt.fun', url: 'https://lxzt.fun', desc: '网址导航' },
+  { name: '乐享折腾', url: 'https://lxzt.fun', desc: '网址导航' },
   { name: 'ZT 折腾簿', url: 'https://www.ztsite.com', desc: '折腾笔记与博客' },
   { name: 'KeeTools', url: 'https://keetools.ztsite.com', desc: '另一套在线工具集' },
   { name: 'IP 查询', url: 'https://ip.lxzt.fun', desc: 'IP 归属地与网络信息' },
-  { name: 'AI 打字', url: 'https://aidazi.lxzt.fun', desc: 'AI 辅助写作' },
+  { name: '爱打字', url: 'https://aidazi.lxzt.fun', desc: '打字练习' },
   { name: '网盘搜索', url: 'https://pansou.lxzt.fun', desc: '网盘资源搜索' },
 ]
 
