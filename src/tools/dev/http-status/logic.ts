@@ -1,0 +1,73 @@
+import type { LookupLogic, LookupItem } from '@/components/templates/types'
+
+const RAW: [string, string, string, string[]][] = [
+  ['100', 'Continue', '服务器已收到请求头，客户端应继续发送请求体', ['1xx', '信息']],
+  ['101', 'Switching Protocols', '协议切换，常见于 WebSocket 升级', ['1xx', 'websocket']],
+  ['102', 'Processing', '服务器正在处理，尚未有响应', ['1xx']],
+  ['103', 'Early Hints', '提前返回部分响应头，用于预加载资源', ['1xx', '性能']],
+  ['200', 'OK', '请求成功，响应体包含结果', ['2xx', '成功']],
+  ['201', 'Created', '资源创建成功，通常用于 POST', ['2xx', '成功']],
+  ['202', 'Accepted', '请求已接受但尚未处理完成', ['2xx', '异步']],
+  ['204', 'No Content', '成功但无响应体，常见于 DELETE / OPTIONS', ['2xx', '成功']],
+  ['206', 'Partial Content', '范围请求成功，用于断点续传与视频拖动', ['2xx', '范围']],
+  ['301', 'Moved Permanently', '永久重定向，搜索引擎会更新索引。注意 POST 可能变 GET', ['3xx', '重定向']],
+  ['302', 'Found', '临时重定向，语义上不应改变请求方法，但历史实现会改', ['3xx', '重定向']],
+  ['303', 'See Other', '强制用 GET 访问新地址，POST 后跳转推荐用它', ['3xx', '重定向']],
+  ['304', 'Not Modified', '协商缓存命中，客户端用本地副本', ['3xx', '缓存']],
+  ['307', 'Temporary Redirect', '临时重定向且保持原请求方法', ['3xx', '重定向']],
+  ['308', 'Permanent Redirect', '永久重定向且保持原请求方法', ['3xx', '重定向']],
+  ['400', 'Bad Request', '请求参数格式错误，服务端无法解析', ['4xx', '客户端']],
+  ['401', 'Unauthorized', '未认证或凭证失效，需要登录', ['4xx', '鉴权']],
+  ['403', 'Forbidden', '已认证但无权限访问', ['4xx', '鉴权']],
+  ['404', 'Not Found', '资源不存在，也可能是路由未匹配', ['4xx', '客户端']],
+  ['405', 'Method Not Allowed', '路径存在但不支持该 HTTP 方法', ['4xx', '客户端']],
+  ['406', 'Not Acceptable', '服务端无法提供 Accept 头要求的格式', ['4xx', '内容协商']],
+  ['408', 'Request Timeout', '请求超时，客户端未在约定时间发完', ['4xx', '超时']],
+  ['409', 'Conflict', '资源状态冲突，例如重复创建或版本号不匹配', ['4xx', '冲突']],
+  ['410', 'Gone', '资源已被永久删除', ['4xx']],
+  ['411', 'Length Required', '缺少 Content-Length', ['4xx']],
+  ['412', 'Precondition Failed', 'If-Match 等前置条件不满足', ['4xx', '缓存']],
+  ['413', 'Payload Too Large', '请求体超过服务端限制，常见于上传', ['4xx', '上传']],
+  ['414', 'URI Too Long', 'URL 过长，GET 参数应改 POST', ['4xx']],
+  ['415', 'Unsupported Media Type', 'Content-Type 不被支持', ['4xx', '上传']],
+  ['416', 'Range Not Satisfiable', '请求的字节范围无效', ['4xx', '范围']],
+  ['418', "I'm a teapot", '彩蛋状态码，RFC 2324', ['4xx', '彩蛋']],
+  ['422', 'Unprocessable Entity', '格式正确但语义校验失败，常见于表单校验', ['4xx', '校验']],
+  ['425', 'Too Early', '防重放攻击，请求过早', ['4xx']],
+  ['426', 'Upgrade Required', '需要升级协议（如 HTTP/2、TLS）', ['4xx']],
+  ['428', 'Precondition Required', '要求带条件请求头，防并发覆盖', ['4xx']],
+  ['429', 'Too Many Requests', '触发限流，看 Retry-After 头', ['4xx', '限流']],
+  ['431', 'Request Header Fields Too Large', '请求头过大', ['4xx']],
+  ['451', 'Unavailable For Legal Reasons', '因法律原因不可用', ['4xx']],
+  ['500', 'Internal Server Error', '服务端未捕获异常', ['5xx', '服务端']],
+  ['501', 'Not Implemented', '服务器不支持该请求方法', ['5xx']],
+  ['502', 'Bad Gateway', '网关从上游收到无效响应，常见于后端挂掉', ['5xx', '网关']],
+  ['503', 'Service Unavailable', '服务暂时不可用，过载或维护', ['5xx', '过载']],
+  ['504', 'Gateway Timeout', '网关等待上游超时', ['5xx', '超时']],
+  ['505', 'HTTP Version Not Supported', '不支持的 HTTP 版本', ['5xx']],
+  ['507', 'Insufficient Storage', '存储空间不足', ['5xx']],
+  ['508', 'Loop Detected', '检测到循环请求', ['5xx']],
+  ['511', 'Network Authentication Required', '需要网络认证，常见于公共 WiFi', ['5xx']],
+]
+
+const DATASET: LookupItem[] = RAW.map(([code, name, desc, tags]) => ({
+  key: code,
+  title: `${code} ${name}`,
+  desc,
+  tags,
+  rows: [
+    { label: '状态码', value: code },
+    { label: '英文名', value: name },
+    { label: '归类', value: tags[0] ?? '' },
+    { label: '说明', value: desc },
+  ],
+}))
+
+const logic: LookupLogic = {
+  DATASET,
+  placeholder: '搜索 404、重定向、超时…',
+  note: '状态码由 RFC 9110 定义，此处补充了常见排查方向',
+  searchKeys: ['title', 'desc', 'key'],
+}
+
+export default logic

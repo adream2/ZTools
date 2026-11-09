@@ -1,0 +1,17 @@
+node_modules
+dist
+.tmp
+.DS_Store
+*.local
+.env
+.env.*
+!.env.example
+.vite
+coverage
+*.log
+.idea
+.vscode/*
+!.vscode/extensions.json
+
+# 项目内 AI 记忆，不进仓库
+.workbuddy/

@@ -1,0 +1,301 @@
+/* 钉钉进步体（自托管子集）。把字体文件放到 src/assets/fonts/ 后取消注释，
+   并用 scripts/subset-font.mjs 子集化到常用 3500 字，控制在 350KB 以内。
+@font-face {
+  font-family: 'DingTalkJinBuTi';
+  src: url('../fonts/DingTalkJinBuTi-subset.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+*/
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-md);
+  line-height: var(--lh-base);
+  color: var(--c-text);
+  background-color: var(--c-bg);
+  background-image: var(--bg-glow);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 600;
+  line-height: var(--lh-tight);
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: var(--fs-xl);
+}
+h2 {
+  font-size: var(--fs-lg);
+}
+h3 {
+  font-size: var(--fs-md);
+}
+
+a {
+  color: var(--c-accent);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+code,
+pre,
+kbd {
+  font-family: var(--font-mono);
+  font-size: 0.925em;
+}
+
+img,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+  border-radius: var(--radius-control-sm);
+}
+
+::selection {
+  background: var(--c-accent-weak);
+  color: var(--c-text);
+}
+
+/* 滚动条：细、低调，轨道透明以便露出柔光背景 */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--c-border-strong) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--c-border-strong);
+  border: 3px solid transparent;
+  border-radius: var(--radius-pill);
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--c-text-3);
+  background-clip: content-box;
+}
+
+/* ============================================================
+   黏土语义类（工具与页面统一复用，禁止再手写 border+radius+overflow）
+   ============================================================ */
+
+/* 浮起：独立可交互对象 —— 卡片、面板、弹层、拖拽区 */
+.clay-card {
+  background: var(--c-surface);
+  border-radius: var(--radius-container-md);
+  box-shadow: var(--clay-raised);
+  contain: paint;
+}
+
+.clay-card--sm {
+  border-radius: var(--radius-container-sm);
+  box-shadow: var(--clay-raised-sm);
+}
+
+/* 大面板：工具页主体 */
+.clay-panel {
+  background: var(--c-surface);
+  border-radius: var(--radius-container-lg);
+  box-shadow: var(--clay-raised);
+  padding: var(--sp-5);
+}
+
+/* 凹陷：承载输入或状态的槽位 —— 输入框、代码区、进度槽 */
+.clay-inset {
+  background: var(--c-surface-2);
+  border-radius: var(--radius-container-sm);
+  box-shadow: var(--clay-inset);
+}
+
+/* 列表容器：行与行之间只用分隔线，不加阴影 */
+.clay-list {
+  background: var(--c-surface);
+  border-radius: var(--radius-container-sm);
+  box-shadow: var(--clay-inset);
+  overflow: hidden;
+}
+
+/* 表格容器：同上，圆角略小 */
+.clay-table {
+  background: var(--c-surface);
+  border-radius: var(--radius-container-sm);
+  box-shadow: var(--clay-inset);
+  overflow: hidden;
+}
+
+/* 工具操作条：扁平，不参与阴影体系 */
+.clay-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+}
+
+/* 行分隔：列表行、导航项、表格行统一用它 */
+.clay-row {
+  border-bottom: 1px solid var(--c-border);
+}
+.clay-row:last-child {
+  border-bottom: none;
+}
+
+/* 长列表性能：超过 40 项时给容器加这个类 */
+.clay-virtual {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 320px;
+}
+
+/* 双栏编辑布局：两侧强制等高，输入与输出框顶部底边都对得齐 */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--sp-3);
+  align-items: stretch;
+}
+.split > * {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+/* Field 内的控件撑满剩余高度 */
+.split > * > *:last-child {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.split textarea {
+  flex: 1 1 auto;
+}
+/* 带标题栏的输出容器：标题固定，内容区吃掉剩余空间 */
+.split .out,
+.split .clay-list,
+.split .clay-table {
+  display: flex;
+  flex-direction: column;
+}
+.split .out > *:last-child,
+.split .clay-list > *:last-child,
+.split .clay-table > *:last-child {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+@media (max-width: 860px) {
+  .split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .split > * {
+    display: block;
+  }
+  .split > * > *:last-child {
+    flex: none;
+  }
+}
+
+/* 极少量工具类 */
+.u-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+.u-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+}
+.u-mono {
+  font-family: var(--font-mono);
+}
+.u-muted {
+  color: var(--c-text-2);
+}
+.u-dim {
+  color: var(--c-text-3);
+}
+.u-xs {
+  font-size: var(--fs-xs);
+}
+.u-sm {
+  font-size: var(--fs-sm);
+}
+.u-grow {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.u-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.u-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

@@ -1,0 +1,8 @@
+# ads.txt —— 授权广告系统售卖本站广告位
+#
+# 启用 Google AdSense 后：
+#   1. 把下面的 pub-0000000000000000 换成你的发布商 ID（不含 ca- 前缀）
+#   2. 构建时若设置了 VITE_ADSENSE_CLIENT，会自动在 dist/ads.txt 生成正确内容覆盖本文件
+#
+# 未启用广告时，这个文件保留占位不影响任何功能。
+google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0

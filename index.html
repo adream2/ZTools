@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#2f6bff" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- 站长平台验证：构建时由 VITE_VERIFY_* 环境变量注入，未配置则为空 -->
+    <!--site-verify-->
+
+    <!-- Google AdSense：构建时由 VITE_ADSENSE_CLIENT 注入，未配置则不加载任何广告脚本 -->
+    <!--adsense-->
+
+    <title>ZT 工具箱 · 120 个纯本地在线工具，无需注册</title>
+    <meta
+      name="description"
+      content="纯本地运行的中文在线工具箱：JSON 格式化、Base64、哈希、JWT、正则测试、二维码、图片压缩、房贷计算、单位换算等 120 个工具。无需注册、无广告，数据不出浏览器，支持安装离线使用。"
+    />
+    <meta
+      name="keywords"
+      content="在线工具,工具箱,JSON格式化,Base64编解码,哈希计算,JWT解析,正则测试,二维码生成,图片压缩,时间戳转换,单位换算,房贷计算,个税计算,在线小工具"
+    />
+    <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
+    <link rel="apple-touch-icon" href="%BASE_URL%icons/apple-touch-icon.png" />
+    <link rel="alternate" type="text/plain" href="%BASE_URL%llms.txt" title="LLM 索引" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ZT 工具箱" />
+    <meta property="og:locale" content="zh_CN" />
+    <meta property="og:title" content="ZT 工具箱 · 120 个纯本地在线工具" />
+    <meta property="og:description" content="开发调试、站长网络、内容创作、计算换算，120 个工具全部在浏览器本地完成，无广告、无需注册，可安装离线使用。" />
+    <meta property="og:image" content="%BASE_URL%icons/pwa-512.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ZT 工具箱 · 120 个纯本地在线工具" />
+    <meta name="twitter:description" content="120 个在线工具，数据不出浏览器，无需注册、无广告。" />
+    <meta name="twitter:image" content="%BASE_URL%icons/pwa-512.png" />
+
+    <!-- 结构化数据：站点 / 应用 / 常见问题 -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "name": "ZT 工具箱",
+            "alternateName": "ZT Tools",
+            "url": "/",
+            "inLanguage": "zh-CN",
+            "description": "纯本地运行的中文在线工具箱，120 个工具，无需注册、无广告，数据不出浏览器。"
+          },
+          {
+            "@type": "WebApplication",
+            "name": "ZT 工具箱",
+            "applicationCategory": "UtilitiesApplication",
+            "operatingSystem": "Any (Web)",
+            "browserRequirements": "需要支持 JavaScript 的现代浏览器",
+            "inLanguage": "zh-CN",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "CNY" },
+            "featureList": [
+              "开发调试：JSON / YAML / XML 格式化、Base64、URL 编解码、哈希、JWT、正则测试、Cron、UUID、时间戳",
+              "站长网络：IP 查询、DNS 查询、CIDR 计算、robots.txt、sitemap、favicon、二维码",
+              "内容创作：图片压缩与裁剪、Markdown 预览、颜色工具、CSS 生成器、繁简转换、拼音",
+              "计算换算：单位换算、进制转换、日期计算、房贷、个税、BMI、随机密码"
+            ]
+          },
+          {
+            "@type": "Blog",
+            "name": "ZT 工具箱 · 使用指南",
+            "inLanguage": "zh-CN",
+            "description": "围绕工具实际使用场景的原创教程：常见错误定位、排查顺序、原理细节。",
+            "blogPost": [
+              {
+                "@type": "BlogPosting",
+                "headline": "JSON 格式化：从「Unexpected token」到定位到具体那一行",
+                "url": "/#/guides/json-format-errors",
+                "datePublished": "2026-11-08"
+              },
+              {
+                "@type": "BlogPosting",
+                "headline": "网站打不开时，先做这 5 步 DNS 排查",
+                "url": "/#/guides/dns-troubleshooting",
+                "datePublished": "2026-11-07"
+              },
+              {
+                "@type": "BlogPosting",
+                "headline": "Base64 不是加密：它到底能做什么、不能做什么",
+                "url": "/#/guides/base64-is-not-encryption",
+                "datePublished": "2026-11-06"
+              },
+              {
+                "@type": "BlogPosting",
+                "headline": "为什么你的正则会让浏览器卡死：ReDoS 与三种写法",
+                "url": "/#/guides/regex-redos",
+                "datePublished": "2026-11-05"
+              },
+              {
+                "@type": "BlogPosting",
+                "headline": "时间戳、时区与「今天」：为什么你的代码总差 8 小时",
+                "url": "/#/guides/timestamp-timezone",
+                "datePublished": "2026-11-04"
+              },
+              {
+                "@type": "BlogPosting",
+                "headline": "URL 编码完全指南：中文、空格与那个万恶的加号",
+                "url": "/#/guides/url-encoding-guide",
+                "datePublished": "2026-11-03"
+              },
+              {
+                "@type": "BlogPosting",
+                "headline": "HTTP 状态码入门：401 和 403 到底差在哪",
+                "url": "/#/guides/http-status-codes",
+                "datePublished": "2026-11-02"
+              },
+              {
+                "@type": "BlogPosting",
+                "headline": "DNS 记录类型：A、CNAME、MX、TXT 各自在干什么",
+                "url": "/#/guides/dns-record-types",
+                "datePublished": "2026-11-01"
+              },
+              {
+                "@type": "BlogPosting",
+                "headline": "Cron 表达式入门：五个星号到底怎么读",
+                "url": "/#/guides/cron-basics",
+                "datePublished": "2026-10-31"
+              },
+              {
+                "@type": "BlogPosting",
+                "headline": "UUID 有五个版本，为什么新项目该用 v7",
+                "url": "/#/guides/uuid-versions",
+                "datePublished": "2026-10-30"
+              },
+              {
+                "@type": "BlogPosting",
+                "headline": "IP 地址入门：192.168 开头的地址为什么上不了网",
+                "url": "/#/guides/ip-address-basics",
+                "datePublished": "2026-10-29"
+              },
+              {
+                "@type": "BlogPosting",
+                "headline": "为什么 1TB 硬盘插上只有 931GB：容量单位的两套算法",
+                "url": "/#/guides/byte-units",
+                "datePublished": "2026-10-28"
+              },
+              {
+                "@type": "BlogPosting",
+                "headline": "ASCII、GBK、Unicode、UTF-8：乱码到底是怎么产生的",
+                "url": "/#/guides/charset-encoding",
+                "datePublished": "2026-10-27"
+              },
+              {
+                "@type": "BlogPosting",
+                "headline": "哈希、加密、编码：三个词天天被混用，区别到底在哪",
+                "url": "/#/guides/hash-encryption-encoding",
+                "datePublished": "2026-10-26"
+              },
+              {
+                "@type": "BlogPosting",
+                "headline": "图片格式怎么选：JPG、PNG、WebP、AVIF、SVG 一次讲清",
+                "url": "/#/guides/image-formats",
+                "datePublished": "2026-10-25"
+              },
+              {
+                "@type": "BlogPosting",
+                "headline": "Cache-Control 怎么写：为什么发版后用户还看到旧页面",
+                "url": "/#/guides/browser-cache",
+                "datePublished": "2026-10-24"
+              },
+              {
+                "@type": "BlogPosting",
+                "headline": "HTTPS 到底加密了什么：一次握手要解决三个问题",
+                "url": "/#/guides/https-handshake",
+                "datePublished": "2026-10-23"
+              },
+              {
+                "@type": "BlogPosting",
+                "headline": "为什么页面会卡死：主线程、Web Worker 与一次计算的分工",
+                "url": "/#/guides/web-worker",
+                "datePublished": "2026-10-22"
+              },
+              {
+                "@type": "BlogPosting",
+                "headline": "JWT 该存在哪：localStorage、Cookie 还是内存",
+                "url": "/#/guides/jwt-storage",
+                "datePublished": "2026-10-21"
+              },
+              {
+                "@type": "BlogPosting",
+                "headline": "CDN 是怎么让网站变快的：回源、边缘节点与缓存键",
+                "url": "/#/guides/cdn-basics",
+                "datePublished": "2026-10-20"
+              },
+              {
+                "@type": "BlogPosting",
+                "headline": "DevTools 的 Network 面板：排查问题的第一现场",
+                "url": "/#/guides/devtools-network",
+                "datePublished": "2026-10-19"
+              },
+              {
+                "@type": "BlogPosting",
+                "headline": "正则入门：从匹配一个手机号开始",
+                "url": "/#/guides/regex-basics",
+                "datePublished": "2026-10-18"
+              }
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "这个工具箱需要联网吗？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "共 120 个工具，其中 115 个完全在浏览器本地运行，不需要联网。只有 IP 查询、DNS 查询、站点可达性检测等 5 个工具需要访问外部接口，且只在用户点击查询时才发请求。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "输入的敏感数据会被上传吗？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "不会。所有计算都在浏览器内存里完成，站点没有后端服务器，不设 Cookie、不接入统计或广告脚本。联网工具也只把用户输入的域名或 IP 发给对应的公开接口。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "可以离线使用吗？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "可以。通过浏览器菜单把它安装为应用后，应用外壳会缓存到本地，打开过的工具会按需缓存；首次访问后重新打开一次，离线体验才完整。"
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "免费吗？有广告或注册吗？",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "完全免费，没有广告、不需要注册，也没有使用次数限制。项目是纯静态站点，可部署到 Cloudflare Workers、腾讯 EdgeOne Pages 或 GitHub Pages。"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+
+    <!-- 防闪白：必须在样式之前执行 -->
+    <script>
+      (function () {
+        try {
+          var m = localStorage.getItem('zt-theme') || 'system'
+          var dark = m === 'dark' || (m === 'system' && matchMedia('(prefers-color-scheme: dark)').matches)
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light'
+        } catch (e) {
+          document.documentElement.dataset.theme = 'light'
+        }
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <noscript>
+      <div style="max-width: 820px; margin: 48px auto; padding: 0 20px; font-family: system-ui, sans-serif; line-height: 1.75; color: #2b2e42">
+        <h1>ZT 工具箱</h1>
+        <p>
+          一个纯本地运行的中文在线工具箱，共 120 个工具，覆盖开发调试、站长网络、内容创作、计算换算四类场景。
+          所有计算都在浏览器内完成，不上传任何数据，没有广告、无需注册，可以安装为离线应用。
+        </p>
+
+        <h2>开发调试（44 个）</h2>
+        <p>
+          JSON 格式化、YAML 转换、XML 格式化、JSON 转 TypeScript / Go / Zod、JSON 与 CSV 互转、JSON 扁平化、
+          CSV 转 SQL、配置转 .env、SQL 格式化、HTML 实体编解码、Unicode 转换、Hex 与文本、Base32 编解码、
+          Base64 编解码、URL 编解码、文本转义、命名风格转换、数字格式化、哈希计算（MD5 / SHA）、
+          HMAC 签名、AES 加解密、RSA 密钥对、ROT 与凯撒密码、摩尔斯电码、JWT 解析、正则测试、文本对比、
+          Cron 表达式、UUID 生成、ULID 生成、ObjectId 解析、雪花 ID 解析、版本号工具、时间戳转换、
+          IPv4 转换、IPv6 工具、JSON 取值、HTTP 状态码查询、MIME 类型查询、Mock 数据生成、占位文本、
+          .gitignore 生成、docker run 转 Compose、curl 转代码
+        </p>
+
+        <h2>站长网络（20 个）</h2>
+        <p>
+          IP 查询、DNS 查询、CIDR 计算、站点可达性检测、连通性测试、批量链接检测、User-Agent 解析、URL 解析、
+          robots.txt 生成、sitemap 生成、SEO meta 生成、社交分享预览、Nginx 重定向规则、
+          安全响应头生成、缓存策略生成、Referrer 策略、二维码生成、二维码识别、条形码生成、Favicon 生成
+        </p>
+
+        <h2>内容创作（25 个）</h2>
+        <p>
+          图片压缩、图片裁剪、批量改尺寸、图片旋转、图片格式转换、图片加水印、文字卡片、
+          Markdown 预览、Markdown 表格生成、颜色工具、配色方案、CSS 阴影生成器、
+          CSS 渐变生成器、CSS 圆角生成器、CSS 滤镜调试、SVG 预览、SVG 压缩、繁简转换、汉字转拼音、
+          中英文加空格、段落排版、字数统计、Emoji 搜索、特殊符号、标题转 Slug
+        </p>
+
+        <h2>计算换算（31 个）</h2>
+        <p>
+          单位换算、进制转换、日期计算、时间戳转换、时区转换、世界时钟、农历转换、日期倒计时、
+          番茄钟、秒表、房贷计算、个税计算、折扣计算、AA 分账、基础代谢、BMI 计算、油耗计算、
+          人民币大写、身份证解析、银行卡校验、ISBN 校验、随机密码、密码强度、随机数抽取、骰子抽取、
+          罗马数字、CSS 单位换算、烹饪单位、鞋码换算、纸张尺寸、文本处理
+        </p>
+
+        <h2>使用指南</h2>
+        <p>
+          站内还有 22 篇原创教程，既有排查方法也有入门概念：JSON 报错怎么定位到行、DNS 不通按什么顺序排除、
+          Base64 为什么不能当加密用、正则的灾难性回溯是怎么发生的、时间戳与时区为什么会差 8 小时、
+          URL 编码里 \`+\` 到底是不是空格；以及 HTTP 状态码 401 与 403 的区别、A / CNAME / MX / TXT 记录怎么填、
+          Cron 五个星号怎么读、UUID 为什么新项目该用 v7、私网 IP 为什么上不了网、1TB 硬盘为什么只有 931GB、
+          ASCII 与 UTF-8 的关系、哈希加密编码怎么区分、图片格式怎么选、Cache-Control 怎么写。
+        </p>
+
+        <h2>常见问题</h2>
+        <dl>
+          <dt>这个工具箱需要联网吗？</dt>
+          <dd>120 个工具中 115 个完全在本地运行；只有 IP 查询、DNS 查询、站点可达性检测需要访问外部公开接口。</dd>
+          <dt>数据会被上传吗？</dt>
+          <dd>不会。没有后端服务器，不设 Cookie，不接入统计或广告脚本。</dd>
+          <dt>可以离线使用吗？</dt>
+          <dd>可以，安装为应用后外壳与打开过的工具会缓存到本地。</dd>
+        </dl>
+
+        <p><strong>本页面需要启用 JavaScript 才能使用交互功能。</strong></p>
+      </div>
+    </noscript>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

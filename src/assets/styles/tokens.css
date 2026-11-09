@@ -1,0 +1,203 @@
+:root {
+  color-scheme: light;
+
+  --font-sans: system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Source Han Sans SC', sans-serif;
+  --font-brand: 'DingTalkJinBuTi', var(--font-sans);
+  --font-mono: ui-monospace, 'JetBrains Mono', 'Cascadia Code', 'SF Mono', Consolas,
+    'Liberation Mono', monospace;
+
+  --fs-xs: 12px;
+  --fs-2xs: 10px;
+  --fs-sm: 13px;
+  --fs-md: 14px;
+  --fs-lg: 16px;
+  --fs-xl: 21px;
+  --fs-2xl: 30px;
+
+  --lh-tight: 1.25;
+  --lh-base: 1.62;
+  --lh-code: 1.55;
+
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+
+  /* ---- 圆角：容器与控件分离，避免调卡片把表单变药丸 ---- */
+  --radius-container-sm: 14px;
+  --radius-container-md: 20px;
+  --radius-container-lg: 26px;
+
+  --radius-control-sm: 10px;
+  --radius-control-md: 14px;
+  --radius-pill: 999px;
+
+  /* 兼容旧引用（一期组件仍在使用） */
+  --radius-sm: var(--radius-control-sm);
+  --radius-md: var(--radius-control-md);
+  --radius-lg: var(--radius-control-md);
+  --radius-full: var(--radius-pill);
+
+  /* ---- 色板 ---- */
+  --c-bg: #eef1f9;
+  --c-bg-subtle: #e6ebf7;
+  --c-bg-sunken: #dde4f3;
+  --c-surface: #f8faff;
+  --c-surface-2: #e5eaf6;
+  --c-surface-raised: #fbfcff;
+
+  --c-border: #e3e7f3;
+  --c-border-strong: #ccd3e6;
+
+  --c-text: #2b2e42;
+  --c-text-2: #666b8a;
+  --c-text-3: #9aa0b8;
+
+  --c-accent: #5b6cff;
+  --c-accent-hover: #4a5bf0;
+  --c-accent-weak: #e8ebff;
+
+  --c-ok: #1f9d69;
+  --c-warn: #b8730a;
+  --c-warn-weak: #fff3dd;
+  --c-danger: #d93b30;
+  --c-danger-weak: #ffecea;
+
+  --c-code-bg: #eef1f9;
+  --c-on-accent: #ffffff;
+  --c-overlay: rgb(28 30 44 / 42%);
+  --c-code-num: #7c5cd6;
+  --c-code-key: #3f56d8;
+  --c-code-str: #1f8f63;
+
+  /* 分类主题色：只用于装饰层，绝不用于链接/按钮 */
+  --c-cat-dev: #7c6cff;
+  --c-cat-webmaster: #ff7a6b;
+  --c-cat-content: #3fc9a4;
+  --c-cat-calc: #f5b73d;
+
+  /* ---- 黏土阴影三件套 ---- */
+  --clay-raised:
+    6px 6px 16px rgb(159 166 199 / 30%),
+    -5px -5px 14px rgb(255 255 255 / 95%),
+    inset -1.5px -1.5px 4px rgb(159 166 199 / 14%),
+    inset 1.5px 1.5px 4px rgb(255 255 255 / 90%);
+
+  --clay-raised-sm:
+    4px 4px 10px rgb(159 166 199 / 26%),
+    -3px -3px 8px rgb(255 255 255 / 90%),
+    inset -1px -1px 3px rgb(159 166 199 / 12%),
+    inset 1px 1px 3px rgb(255 255 255 / 85%);
+
+  --clay-inset:
+    inset 3px 3px 8px rgb(159 166 199 / 28%),
+    inset -3px -3px 8px rgb(255 255 255 / 90%);
+
+  --clay-pressed:
+    inset 2px 2px 6px rgb(159 166 199 / 32%),
+    inset -2px -2px 6px rgb(255 255 255 / 85%);
+
+  /* 兼容旧阴影引用 */
+  --shadow-1: var(--clay-raised-sm);
+  --shadow-2:
+    0 14px 34px rgb(159 166 199 / 32%),
+    0 2px 6px rgb(159 166 199 / 18%);
+  --ring: 0 0 0 3px rgb(91 108 255 / 24%);
+
+  /* 页面柔光背景 */
+  --bg-glow:
+    radial-gradient(1100px 620px at 12% -8%, rgb(124 108 255 / 10%), transparent 62%),
+    radial-gradient(900px 540px at 96% 4%, rgb(63 201 164 / 9%), transparent 58%),
+    radial-gradient(760px 480px at 50% 108%, rgb(245 183 61 / 8%), transparent 60%);
+
+  --dur-fast: 130ms;
+  --dur-base: 220ms;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  --w-sidebar: 236px;
+  --h-topbar: 60px;
+  --shell-gap: 12px;
+  --shell-pad: 14px;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --c-bg: #16181f;
+  --c-bg-subtle: #1a1d26;
+  --c-bg-sunken: #14161c;
+  --c-surface: #1e212b;
+  --c-surface-2: #191c25;
+  --c-surface-raised: #232633;
+
+  --c-border: #2b2f3d;
+  --c-border-strong: #3b4052;
+
+  --c-text: #e8eaf4;
+  --c-text-2: #a0a5bd;
+  --c-text-3: #6e7387;
+
+  --c-accent: #8b97ff;
+  --c-accent-hover: #a3adff;
+  --c-accent-weak: #232842;
+
+  --c-ok: #3ecf8e;
+  --c-warn: #e0a458;
+  --c-warn-weak: #2b2318;
+  --c-danger: #ff6b62;
+  --c-danger-weak: #2c1a19;
+
+  --c-code-bg: #191c25;
+  --c-on-accent: #ffffff;
+  --c-overlay: rgb(6 7 10 / 62%);
+  --c-code-num: #c0a2ff;
+  --c-code-key: #93a4ff;
+  --c-code-str: #6ddfae;
+
+  --c-cat-dev: #9a8dff;
+  --c-cat-webmaster: #ff9b8f;
+  --c-cat-content: #5ddcbb;
+  --c-cat-calc: #ffcb6b;
+
+  /* 暗色不靠投影，靠提亮 + 极细内描边 */
+  --clay-raised:
+    4px 4px 12px rgb(0 0 0 / 34%),
+    inset 0 0 0 1px rgb(255 255 255 / 6%),
+    inset -1px -1px 3px rgb(0 0 0 / 30%),
+    inset 1px 1px 3px rgb(255 255 255 / 4%);
+
+  --clay-raised-sm:
+    3px 3px 8px rgb(0 0 0 / 30%),
+    inset 0 0 0 1px rgb(255 255 255 / 5%);
+
+  --clay-inset:
+    inset 0 0 0 1px rgb(255 255 255 / 4%),
+    inset 2px 2px 6px rgb(0 0 0 / 38%),
+    inset -2px -2px 6px rgb(255 255 255 / 3%);
+
+  --clay-pressed:
+    inset 0 0 0 1px rgb(255 255 255 / 5%),
+    inset 2px 2px 5px rgb(0 0 0 / 44%);
+
+  --shadow-1: var(--clay-raised-sm);
+  --shadow-2:
+    0 16px 36px rgb(0 0 0 / 48%),
+    0 2px 8px rgb(0 0 0 / 30%);
+  --ring: 0 0 0 3px rgb(139 151 255 / 30%);
+
+  --bg-glow:
+    radial-gradient(1100px 620px at 12% -8%, rgb(124 108 255 / 14%), transparent 62%),
+    radial-gradient(900px 540px at 96% 4%, rgb(63 201 164 / 8%), transparent 58%),
+    radial-gradient(760px 480px at 50% 108%, rgb(245 183 61 / 6%), transparent 60%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur-base: 0ms;
+  }
+}
