@@ -97,9 +97,44 @@ npm run build && npx wrangler deploy
 
 导入仓库，构建 `npm run build`，安装 `npm ci`，输出 `dist`，Node 22.11.0。配置已在 `edgeone.json` 里。绑国内域名需要 ICP 备案。
 
-### GitHub Pages
+### GitHub Pages（备用）
 
-仓库 Settings → Pages → Source 选 **GitHub Actions**，push 到 `main` 即可。工作流自动设 `VITE_BASE=/<仓库名>/` 并跑 `check-dist.mjs`，base 不一致会直接失败。
+主部署目标是 Cloudflare Workers，Pages 只作为备用域：
+
+1. 仓库 Settings → Pages → Source 选 **GitHub Actions**
+2. 到 Actions 页手动 Run `Deploy to GitHub Pages`
+
+工作流默认 **只在手动触发**（`workflow_dispatch`），因为没启用 Pages 时 push 会让 Actions 直接变红。想恢复自动部署，把 `.github/workflows/deploy.yml` 里注释掉的 `push:` 段取消注释。
+
+工作流会自动设 `VITE_BASE=/<仓库名>/` 并跑 `check-dist.mjs`，base 不一致会直接失败。
+
+### Cloudflare Workers + 自定义域名
+
+本项目已按 `ztools.lxzt.fun` 配好：
+
+```jsonc
+// wrangler.jsonc
+{
+  "name": "ztools",
+  "assets": { "directory": "./dist", "not_found_handling": "single-page-application" },
+  "routes": [{ "pattern": "ztools.lxzt.fun", "custom_domain": true }]
+}
+```
+
+部署：
+
+```bash
+npm run build
+npx wrangler login      # 首次
+npx wrangler deploy     # 自动创建 Worker + 绑定自定义域名
+```
+
+前提：`lxzt.fun` 的 NS 已指向 Cloudflare。如果域名还在别处解析，两个选择：
+
+- 把 NS 迁到 Cloudflare（推荐，`custom_domain: true` 会自动签发证书）
+- 保留现有 DNS，改用 `CNAME ztools → ztools.<account>.workers.dev`，并在 Cloudflare 面板里把域名加为 Custom Domain
+
+`custom_domain` 要求域名托管在 Cloudflare，否则 deploy 会报错——这时把手动 `routes` 删掉，先在面板绑域名。
 
 本地验证子路径（Git Bash 必须加 `MSYS_NO_PATHCONV=1`）：
 

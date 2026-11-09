@@ -1,9 +1,12 @@
 name: Deploy to GitHub Pages
 
+# 默认只手动触发：主部署目标是 Cloudflare Workers，
+# Pages 作为备用，需要时在仓库 Settings → Pages 把 Source 设为 GitHub Actions，
+# 然后到 Actions 页手动 Run workflow。想恢复 push 自动部署，取消下面注释即可。
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
+  # push:
+  #   branches: [main]
 
 # 子路径部署：base 必须等于仓库名
 env:
