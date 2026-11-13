@@ -26,7 +26,7 @@ function toFullWidthPunct(text: string): string {
     .replace(/:(?=\s|$)/g, '：')
     .replace(/\?/g, '？')
     .replace(/!/g, '！')
-    .replace(/\(")/g, '（"')
+    .replace(/\("/g, '（"')
 }
 
 function apply(text: string, op: string): string {

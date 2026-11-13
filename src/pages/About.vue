@@ -16,7 +16,7 @@ import { CONTACT_EMAIL, SITE_OWNER, SITE_SINCE } from '@/core/site-config'
     <h2>技术上的几个选择</h2>
     <ul>
       <li><strong>纯静态</strong>：没有后端、没有边缘函数，一份构建产物可以放到任何静态托管上。</li>
-      <li><strong>Hash 路由</strong>：<code>#/tools/xxx</code>，在 GitHub Pages 的子路径下也不会 404。</li>
+      <li><strong>独立地址</strong>：每个工具和文章都有自己的路径（<code>/tools/xxx</code>），可直接分享、被搜索引擎单独收录。</li>
       <li><strong>重活扔给 Worker</strong>：大 JSON、哈希、正则、图片压缩都在独立线程算，页面不会卡死；正则还带 3 秒强制超时。</li>
       <li><strong>离线优先</strong>：Service Worker 缓存应用外壳，断网也能打开已经访问过的工具。</li>
       <li><strong>零第三方 UI 库</strong>：界面是手写的 CSS 变量体系，暗色模式靠 token 切换，没有远程字体和图标 CDN。</li>

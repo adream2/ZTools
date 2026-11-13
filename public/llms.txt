@@ -1,183 +1,285 @@
 # ZT 工具箱
 
-> 纯静态的中文在线工具箱，共 120 个工具。其中 115 个完全在浏览器本地运行，不上传任何输入数据；另外 3 个（IP 查询、DNS 查询、站点可达性检测）需要访问公开接口。无广告、无需注册、无使用次数限制，可安装为离线应用，可部署到 Cloudflare Workers、腾讯 EdgeOne Pages 或 GitHub Pages。
+> 纯静态的中文在线工具箱，共 202 个工具。其中 197 个完全在浏览器本地运行，不上传任何输入数据；另外 5 个（IP 查询、DNS 查询、站点可达性检测、连通性测试、批量链接检测）需要访问公开接口。无广告、无需注册、无使用次数限制，可安装为离线应用，可部署到 Cloudflare Workers、腾讯 EdgeOne Pages 或 GitHub Pages。
 
 本文件供大语言模型与生成式搜索引擎抓取站点结构与事实性信息。所有工具页面均为纯前端实现，无需登录，不产生副作用。
 
 ## 关键事实
 
-- 工具总数：120
-- 纯本地工具：115
+- 工具总数：202
+- 纯本地工具：197
 - 需要联网的工具：5（IP 查询、DNS 查询、站点可达性检测、连通性测试、批量链接检测）
 - 数据处理：全部在浏览器内完成，站点没有后端服务器，不设 Cookie，不接入统计与广告脚本
-- 原创文章：6 篇使用指南（约 7000 字）
+- 原创文章：25 篇使用指南（约 2.5 万字）
 - 收费模式：完全免费
 - 技术栈：Vue 3 + Vite + TypeScript，纯静态构建，Hash 路由
 - 部署目标：Cloudflare Workers、腾讯 EdgeOne Pages、GitHub Pages
 
-## 开发调试（44 个）
+## 开发调试（64 个）
 
-- [JSON 格式化](/#/tools/json-formatter)：格式化、压缩、校验、排序键名，大文件走独立线程
-- [YAML 转换](/#/tools/yaml-formatter)：YAML 与 JSON 互转，core schema 校验
-- [XML 格式化](/#/tools/xml-formatter)：缩进美化、压缩、转 JSON
-- [JSON 转类型](/#/tools/json-to-ts)：生成 TypeScript 接口、type、Zod schema、Go struct
-- [JSON 与 CSV](/#/tools/json-to-csv)：对象数组与 CSV / TSV 互转
-- [SQL 格式化](/#/tools/sql-formatter)：关键字大写、按子句换行
-- [HTML 实体编解码](/#/tools/html-entity)：实体与字符互转，支持全字符转义
-- [Unicode 转换](/#/tools/unicode-convert)：中文与 \\uXXXX 互转
-- [Hex 与文本](/#/tools/hex-ascii)：十六进制、二进制与字符串互转
-- [Base64 编解码](/#/tools/base64)：文本与文件互转，支持 URL-safe
-- [URL 编解码](/#/tools/url-codec)：组件级、整条 URL、查询参数互转
-- [文本转义](/#/tools/text-escape)：JS / SQL / JSON / 正则转义与还原
-- [命名风格转换](/#/tools/naming-case)：camel / snake / kebab / pascal / constant
-- [数字格式化](/#/tools/number-format)：千分位、中文读法、科学计数
-- [哈希计算](/#/tools/hash)：MD5、SHA-1/256/384/512，支持文件
-- [AES 加解密](/#/tools/aes-crypto)：AES-256-GCM + PBKDF2，密文自带 salt 与 IV
-- [JWT 解析](/#/tools/jwt)：拆解 header / payload，标出过期时间（不验签）
-- [正则测试](/#/tools/regex-tester)：实时高亮、分组查看，3 秒超时防 ReDoS
-- [文本对比](/#/tools/text-diff)：行级与词级差异
-- [Cron 表达式](/#/tools/cron)：中文解释与未来 5 次触发时间
-- [UUID 生成](/#/tools/uuid)：v4 / v7 批量生成
-- [ULID 生成](/#/tools/ulid)：时间有序的 26 位 ID
-- [ObjectId 解析](/#/tools/objectid)：拆解 MongoDB ObjectId
-- [雪花 ID 解析](/#/tools/snowflake)：拆解 64 位雪花 ID
-- [版本号工具](/#/tools/semver)：比较、递增、校验语义化版本
-- [时间戳转换](/#/tools/timestamp)：秒 / 毫秒与日期互转，多时区对照
-- [IPv4 转换](/#/tools/ipv4-convert)：点分十进制与整数互转
-- [HTTP 状态码](/#/tools/http-status)：状态码含义与排查方向
-- [MIME 类型](/#/tools/mime-type)：扩展名与 Content-Type 对照
-- [Mock 数据生成](/#/tools/mock-data)：姓名、手机、邮箱、地址、身份证号
-- [占位文本](/#/tools/lorem-ipsum)：中英文 Lorem Ipsum
-- [.gitignore 生成](/#/tools/gitignore)：按技术栈拼忽略规则
-- [docker run 转 Compose](/#/tools/docker-compose)：把 run 命令翻译成 compose.yaml
-- [curl 转代码](/#/tools/curl-to-code)：转 fetch / axios / Python requests
-- [JSON 扁平化](/#/tools/json-flatten)：嵌套 JSON 与点路径键值互转
-- [CSV 转 SQL](/#/tools/csv-to-sql)：表格数据生成 INSERT 与建表语句
-- [配置转 .env](/#/tools/yaml-to-env)：YAML / JSON 拍平成环境变量
-- [IPv6 工具](/#/tools/ipv6-tool)：展开、压缩与地址类型识别
-- [HMAC 签名](/#/tools/hmac)：生成消息认证码，验证接口签名
-- [JSON 取值](/#/tools/json-path)：按点路径或下标提取嵌套值
-- [Base32 编解码](/#/tools/base32)：RFC 4648 标准，常用于 TOTP 密钥
-- [ROT 与凯撒密码](/#/tools/rot-cipher)：ROT13 / ROT5 / 凯撒位移加解密
-- [摩尔斯电码](/#/tools/morse-code)：文本与摩尔斯码互转
-- [RSA 密钥对](/#/tools/rsa-keypair)：本地生成 PEM 格式公私钥
+- [JSON 格式化](/tools/json-formatter)：格式化、压缩、校验、排序键名，大文件走独立线程
+- [YAML 转换](/tools/yaml-formatter)：YAML 与 JSON 互转，core schema 校验
+- [XML 格式化](/tools/xml-formatter)：缩进美化、压缩、转 JSON
+- [JSON 转类型](/tools/json-to-ts)：生成 TypeScript 接口、type、Zod schema、Go struct
+- [JSON 与 CSV](/tools/json-to-csv)：对象数组与 CSV / TSV 互转
+- [SQL 格式化](/tools/sql-formatter)：关键字大写、按子句换行
+- [HTML 实体编解码](/tools/html-entity)：实体与字符互转，支持全字符转义
+- [Unicode 转换](/tools/unicode-convert)：中文与 \\uXXXX 互转
+- [Hex 与文本](/tools/hex-ascii)：十六进制、二进制与字符串互转
+- [Base64 编解码](/tools/base64)：文本与文件互转，支持 URL-safe
+- [URL 编解码](/tools/url-codec)：组件级、整条 URL、查询参数互转
+- [文本转义](/tools/text-escape)：JS / SQL / JSON / 正则转义与还原
+- [命名风格转换](/tools/naming-case)：camel / snake / kebab / pascal / constant
+- [数字格式化](/tools/number-format)：千分位、中文读法、科学计数
+- [哈希计算](/tools/hash)：MD5、SHA-1/256/384/512，支持文件
+- [AES 加解密](/tools/aes-crypto)：AES-256-GCM + PBKDF2，密文自带 salt 与 IV
+- [JWT 解析](/tools/jwt)：拆解 header / payload，标出过期时间（不验签）
+- [正则测试](/tools/regex-tester)：实时高亮、分组查看，3 秒超时防 ReDoS
+- [文本对比](/tools/text-diff)：行级与词级差异
+- [Cron 表达式](/tools/cron)：中文解释与未来 5 次触发时间
+- [UUID 生成](/tools/uuid)：v4 / v7 批量生成
+- [ULID 生成](/tools/ulid)：时间有序的 26 位 ID
+- [ObjectId 解析](/tools/objectid)：拆解 MongoDB ObjectId
+- [雪花 ID 解析](/tools/snowflake)：拆解 64 位雪花 ID
+- [版本号工具](/tools/semver)：比较、递增、校验语义化版本
+- [时间戳转换](/tools/timestamp)：秒 / 毫秒与日期互转，多时区对照
+- [IPv4 转换](/tools/ipv4-convert)：点分十进制与整数互转
+- [HTTP 状态码](/tools/http-status)：状态码含义与排查方向
+- [MIME 类型](/tools/mime-type)：扩展名与 Content-Type 对照
+- [Mock 数据生成](/tools/mock-data)：姓名、手机、邮箱、地址、身份证号
+- [占位文本](/tools/lorem-ipsum)：中英文 Lorem Ipsum
+- [.gitignore 生成](/tools/gitignore)：按技术栈拼忽略规则
+- [docker run 转 Compose](/tools/docker-compose)：把 run 命令翻译成 compose.yaml
+- [curl 转代码](/tools/curl-to-code)：转 fetch / axios / Python requests
+- [JSON 扁平化](/tools/json-flatten)：嵌套 JSON 与点路径键值互转
+- [CSV 转 SQL](/tools/csv-to-sql)：表格数据生成 INSERT 与建表语句
+- [配置转 .env](/tools/yaml-to-env)：YAML / JSON 拍平成环境变量
+- [IPv6 工具](/tools/ipv6-tool)：展开、压缩与地址类型识别
+- [HMAC 签名](/tools/hmac)：生成消息认证码，验证接口签名
+- [JSON 取值](/tools/json-path)：按点路径或下标提取嵌套值
+- [Base32 编解码](/tools/base32)：RFC 4648 标准，常用于 TOTP 密钥
+- [ROT 与凯撒密码](/tools/rot-cipher)：ROT13 / ROT5 / 凯撒位移加解密
+- [摩尔斯电码](/tools/morse-code)：文本与摩尔斯码互转
+- [RSA 密钥对](/tools/rsa-keypair)：本地生成 PEM 格式公私钥
+- [TOML 转 JSON](/tools/toml-to-json)：Cargo / pyproject 配置一键转 JSON
+- [INI ↔ JSON](/tools/ini-json)：ini 配置与 JSON 互转
+- [Base58 编解码](/tools/base58)：比特币字母表，去掉易混字符
+- [Quoted-Printable](/tools/quoted-printable)：邮件里的 =E4=B8=AD 编解码
+- [JSON 字符串转义](/tools/json-escape)：把文本转成可放进 JSON 的字符串
+- [CSS 压缩](/tools/css-minify)：去注释、压空白，体积立减
+- [维吉尼亚密码](/tools/vigenere)：带密钥的古典替换密码
+- [HTTP 方法速查](/tools/http-methods)：九个方法的幂等性与语义
+- [端口号速查](/tools/port-numbers)：常见服务端口与用途对照
+- [Git 命令速查](/tools/git-cheatsheet)：常用命令、撤销与分支操作
+- [文件哈希](/tools/file-hash)：本地算多个文件的校验值
+- [Base85 编解码](/tools/base85)：Ascii85 编码，比 Base64 更省
+- [UTF-8 字节查看](/tools/utf8-bytes)：看中文到底占几个字节
+- [SQL 转 JSON](/tools/sql-to-json)：把 INSERT 语句转成 JSON 数组
+- [正则速查](/tools/regex-cheatsheet)：常见场景的正则表达式
+- [HTML 压缩](/tools/html-minify)：去注释、合并空白，保留 pre
+- [JSON 转 Schema](/tools/json-schema)：按样例反推 JSON Schema
+- [批量时间戳转换](/tools/timestamp-batch)：一行一个，批量转日期或时间戳
+- [字符显示宽度](/tools/char-width)：算中文占几格，检查对齐
+- [Markdown 目录](/tools/markdown-toc)：按标题自动生成 TOC
 
 ## 站长网络（20 个）
 
-- [IP 查询](/#/tools/ip-lookup)：归属地、运营商、ASN，多数据源自动切换（需联网）
-- [DNS 查询](/#/tools/dns-lookup)：A / AAAA / MX / TXT 等记录，DoH 三源备份（需联网）
-- [站点可达性检测](/#/tools/http-headers)：测响应状态与耗时，跨域响应头受浏览器限制（需联网）
-- [CIDR 计算](/#/tools/ip-cidr)：网段、掩码、可用地址与范围
-- [User-Agent 解析](/#/tools/ua-parser)：识别浏览器、系统与设备
-- [URL 解析](/#/tools/url-parser)：拆解协议、主机、路径与全部参数
-- [robots.txt 生成](/#/tools/robots-txt)：可视化配置规则并校验
-- [sitemap 生成](/#/tools/sitemap-gen)：URL 列表生成 sitemap.xml
-- [SEO meta 生成](/#/tools/seo-meta)：标题、描述、OG 标签一次生成
-- [社交分享预览](/#/tools/og-preview)：生成 Open Graph / Twitter 卡片标签
-- [Nginx 重定向](/#/tools/nginx-redirect)：旧路径批量生成 301 / 302 规则
-- [安全响应头生成](/#/tools/security-headers)：CSP / HSTS / XFO 配置
-- [缓存策略生成](/#/tools/cache-header)：按资源类型给出 Cache-Control
-- [Referrer 策略](/#/tools/referer-policy)：八种策略的含义与适用场景
-- [二维码生成](/#/tools/qrcode)：自定义纠错、颜色与尺寸，导出 PNG / SVG
-- [二维码识别](/#/tools/qr-decode)：从图片读出二维码内容
-- [Favicon 生成](/#/tools/favicon-gen)：一张图生成全套图标与 ICO
-- [条形码生成](/#/tools/barcode-gen)：Code128 / EAN 等格式，导出 PNG
-- [连通性测试](/#/tools/ping-test)：连续探测延迟与成功率（需联网）
-- [批量链接检测](/#/tools/url-batch-check)：一次检查多条链接是否可访问（需联网）
+- [IP 查询](/tools/ip-lookup)：归属地、运营商、ASN，多数据源自动切换（需联网）
+- [DNS 查询](/tools/dns-lookup)：A / AAAA / MX / TXT 等记录，DoH 三源备份（需联网）
+- [站点可达性检测](/tools/http-headers)：测响应状态与耗时，跨域响应头受浏览器限制（需联网）
+- [CIDR 计算](/tools/ip-cidr)：网段、掩码、可用地址与范围
+- [User-Agent 解析](/tools/ua-parser)：识别浏览器、系统与设备
+- [URL 解析](/tools/url-parser)：拆解协议、主机、路径与全部参数
+- [robots.txt 生成](/tools/robots-txt)：可视化配置规则并校验
+- [sitemap 生成](/tools/sitemap-gen)：URL 列表生成 sitemap.xml
+- [SEO meta 生成](/tools/seo-meta)：标题、描述、OG 标签一次生成
+- [社交分享预览](/tools/og-preview)：生成 Open Graph / Twitter 卡片标签
+- [Nginx 重定向](/tools/nginx-redirect)：旧路径批量生成 301 / 302 规则
+- [安全响应头生成](/tools/security-headers)：CSP / HSTS / XFO 配置
+- [缓存策略生成](/tools/cache-header)：按资源类型给出 Cache-Control
+- [Referrer 策略](/tools/referer-policy)：八种策略的含义与适用场景
+- [二维码生成](/tools/qrcode)：自定义纠错、颜色与尺寸，导出 PNG / SVG
+- [二维码识别](/tools/qr-decode)：从图片读出二维码内容
+- [Favicon 生成](/tools/favicon-gen)：一张图生成全套图标与 ICO
+- [条形码生成](/tools/barcode-gen)：Code128 / EAN 等格式，导出 PNG
+- [连通性测试](/tools/ping-test)：连续探测延迟与成功率（需联网）
+- [批量链接检测](/tools/url-batch-check)：一次检查多条链接是否可访问（需联网）
 
-## 内容创作（25 个）
+## 内容创作（37 个）
 
-- [图片压缩](/#/tools/image-compress)：调整尺寸与质量，导出 WebP / JPEG / PNG
-- [图片裁剪](/#/tools/image-crop)：框选区域按比例导出
-- [Markdown 预览](/#/tools/markdown)：实时渲染、净化 HTML、导出单文件
-- [Markdown 表格](/#/tools/markdown-table)：按行列数生成对齐表格
-- [颜色工具](/#/tools/color)：HEX / RGB / HSL 互转与 WCAG 对比度检测
-- [阴影生成器](/#/tools/css-shadow)：可视化调参输出 box-shadow
-- [渐变生成器](/#/tools/css-gradient)：线性 / 径向 / 锥形渐变
-- [圆角生成器](/#/tools/css-radius)：四角独立控制
-- [滤镜调试](/#/tools/css-filter)：多滤镜叠加实时预览
-- [SVG 预览](/#/tools/svg-preview)：净化后渲染，导出 PNG
-- [SVG 压缩](/#/tools/svg-minify)：去注释、空白与冗余属性
-- [繁简转换](/#/tools/traditional-simplified)：简体、繁体与台湾用词互转
-- [汉字转拼音](/#/tools/pinyin)：带声调、首字母、姓名模式
-- [中英文加空格](/#/tools/pangu-space)：汉字与西文之间自动补空格
-- [段落排版](/#/tools/text-indent)：首行缩进、段距、去空行
-- [字数统计](/#/tools/word-count)：中英文分别计数、阅读时长、高频词
-- [Emoji 搜索](/#/tools/emoji-picker)：按关键词找表情并复制
-- [特殊符号](/#/tools/special-chars)：箭头、数学、货币符号速查
-- [配色方案](/#/tools/color-palette)：主色生成互补、三角、类似色
-- [标题转 Slug](/#/tools/url-slug)：中文标题转拼音 URL 别名
-- [图片旋转](/#/tools/image-rotate)：90° 旋转与水平垂直翻转
-- [批量改尺寸](/#/tools/image-resize)：多张图片统一缩放，保持比例
-- [图片格式转换](/#/tools/image-format)：PNG / JPEG / WebP 互转
-- [文字卡片](/#/tools/text-to-image)：把文字渲染成社交分享图
-- [图片加水印](/#/tools/image-watermark)：文字水印，位置与透明度可调
+- [图片压缩](/tools/image-compress)：调整尺寸与质量，导出 WebP / JPEG / PNG
+- [图片裁剪](/tools/image-crop)：框选区域按比例导出
+- [Markdown 预览](/tools/markdown)：实时渲染、净化 HTML、导出单文件
+- [Markdown 表格](/tools/markdown-table)：按行列数生成对齐表格
+- [颜色工具](/tools/color)：HEX / RGB / HSL 互转与 WCAG 对比度检测
+- [阴影生成器](/tools/css-shadow)：可视化调参输出 box-shadow
+- [渐变生成器](/tools/css-gradient)：线性 / 径向 / 锥形渐变
+- [圆角生成器](/tools/css-radius)：四角独立控制
+- [滤镜调试](/tools/css-filter)：多滤镜叠加实时预览
+- [SVG 预览](/tools/svg-preview)：净化后渲染，导出 PNG
+- [SVG 压缩](/tools/svg-minify)：去注释、空白与冗余属性
+- [繁简转换](/tools/traditional-simplified)：简体、繁体与台湾用词互转
+- [汉字转拼音](/tools/pinyin)：带声调、首字母、姓名模式
+- [中英文加空格](/tools/pangu-space)：汉字与西文之间自动补空格
+- [段落排版](/tools/text-indent)：首行缩进、段距、去空行
+- [字数统计](/tools/word-count)：中英文分别计数、阅读时长、高频词
+- [Emoji 搜索](/tools/emoji-picker)：按关键词找表情并复制
+- [特殊符号](/tools/special-chars)：箭头、数学、货币符号速查
+- [配色方案](/tools/color-palette)：主色生成互补、三角、类似色
+- [标题转 Slug](/tools/url-slug)：中文标题转拼音 URL 别名
+- [图片旋转](/tools/image-rotate)：90° 旋转与水平垂直翻转
+- [批量改尺寸](/tools/image-resize)：多张图片统一缩放，保持比例
+- [图片格式转换](/tools/image-format)：PNG / JPEG / WebP 互转
+- [文字卡片](/tools/text-to-image)：把文字渲染成社交分享图
+- [图片加水印](/tools/image-watermark)：文字水印，位置与透明度可调
+- [图片转 Base64](/tools/image-base64)：图片转 DataURL，也能反向还原
+- [九宫格切图](/tools/image-nine-grid)：一张图切成 3×3 朋友圈九宫格
+- [文字转语音](/tools/text-to-speech)：用系统语音朗读，不上传文本
+- [SVG 转 PNG](/tools/svg-to-png)：矢量图导出指定宽度位图
+- [圆形头像](/tools/image-circle)：裁成圆形头像并补齐底色
+- [圆角图片](/tools/image-rounded)：给图片加圆角或做成卡片
+- [长图切分](/tools/image-long-split)：超长图切成多张便于上传
+- [批量压缩图片](/tools/image-batch-compress)：一次处理多张，统一限宽导出
+- [图片加相框](/tools/image-frame)：加边框与拍立得式底部留白
+- [多图拼接](/tools/image-merge-long)：多张图竖向拼成一张长图
+- [批量加水印](/tools/image-watermark-batch)：一次给多张图加文字水印
+- [PNG 转 ICO](/tools/png-to-ico)：生成多尺寸网站图标 favicon
 
-## 计算换算（31 个）
+## 计算换算（43 个）
 
-- [单位换算](/#/tools/unit-convert)：长度、重量、温度、面积、体积、速度、数据
-- [进制转换](/#/tools/radix)：2 / 8 / 10 / 16 / 36 进制，支持大数
-- [日期计算](/#/tools/date-calc)：日期差、日期加减、年龄折算
-- [时间戳转换](/#/tools/timestamp)：秒 / 毫秒与日期互转
-- [时区转换](/#/tools/timezone)：同一时刻在不同时区的本地时间
-- [世界时钟](/#/tools/world-clock)：多城市同屏显示时差
-- [农历转换](/#/tools/lunar)：公历转农历，含干支与节气
-- [日期倒计时](/#/tools/countdown)：距目标日期还有多少天
-- [房贷计算](/#/tools/loan-calc)：等额本息 / 等额本金，月供与总利息
-- [个税计算](/#/tools/tax-calc)：工资薪金与年终奖个税
-- [折扣计算](/#/tools/discount)：折扣、满减、折上折
-- [AA 分账](/#/tools/bill-split)：含小费的人均分摊
-- [基础代谢](/#/tools/bmr)：BMR / TDEE 与减脂热量区间
-- [BMI 计算](/#/tools/bmi)：体质指数与健康区间判定
-- [油耗计算](/#/tools/fuel-calc)：百公里油耗与每公里成本
-- [人民币大写](/#/tools/rmb-upper)：金额转财务大写
-- [身份证解析](/#/tools/id-card)：地区、生日、性别与校验位
-- [银行卡校验](/#/tools/bank-card)：Luhn 校验与卡组织识别
-- [ISBN 校验](/#/tools/isbn)：书号校验与 10 / 13 位互转
-- [随机密码](/#/tools/password)：本地生成高强度密码，评估熵值
-- [密码强度](/#/tools/password-strength)：熵值估算与常见问题检查
-- [随机数抽取](/#/tools/random-number)：指定范围批量抽号，支持去重
-- [骰子抽取](/#/tools/dice)：掷骰子、随机点名
-- [罗马数字](/#/tools/roman)：阿拉伯数字与罗马数字互转
-- [烹饪单位](/#/tools/unit-cooking)：杯、勺、毫升、克互相换算
-- [鞋码换算](/#/tools/shoe-size)：脚长与中、欧、美、英码对照
-- [纸张尺寸](/#/tools/paper-size)：A / B / C 系列尺寸对照
-- [文本处理](/#/tools/text-tools)：大小写、去重、排序、加行号
-- [番茄钟](/#/tools/pomodoro)：25 分钟专注 + 5 分钟休息循环
-- [秒表计次](/#/tools/stopwatch)：毫秒精度计时，支持分段记录
-- [CSS 单位换算](/#/tools/css-unit)：px / rem / em / % / vw 互转
+- [单位换算](/tools/unit-convert)：长度、重量、温度、面积、体积、速度、数据
+- [进制转换](/tools/radix)：2 / 8 / 10 / 16 / 36 进制，支持大数
+- [日期计算](/tools/date-calc)：日期差、日期加减、年龄折算
+- [时间戳转换](/tools/timestamp)：秒 / 毫秒与日期互转
+- [时区转换](/tools/timezone)：同一时刻在不同时区的本地时间
+- [世界时钟](/tools/world-clock)：多城市同屏显示时差
+- [农历转换](/tools/lunar)：公历转农历，含干支与节气
+- [日期倒计时](/tools/countdown)：距目标日期还有多少天
+- [房贷计算](/tools/loan-calc)：等额本息 / 等额本金，月供与总利息
+- [个税计算](/tools/tax-calc)：工资薪金与年终奖个税
+- [折扣计算](/tools/discount)：折扣、满减、折上折
+- [AA 分账](/tools/bill-split)：含小费的人均分摊
+- [基础代谢](/tools/bmr)：BMR / TDEE 与减脂热量区间
+- [BMI 计算](/tools/bmi)：体质指数与健康区间判定
+- [油耗计算](/tools/fuel-calc)：百公里油耗与每公里成本
+- [人民币大写](/tools/rmb-upper)：金额转财务大写
+- [身份证解析](/tools/id-card)：地区、生日、性别与校验位
+- [银行卡校验](/tools/bank-card)：Luhn 校验与卡组织识别
+- [ISBN 校验](/tools/isbn)：书号校验与 10 / 13 位互转
+- [随机密码](/tools/password)：本地生成高强度密码，评估熵值
+- [密码强度](/tools/password-strength)：熵值估算与常见问题检查
+- [随机数抽取](/tools/random-number)：指定范围批量抽号，支持去重
+- [骰子抽取](/tools/dice)：掷骰子、随机点名
+- [罗马数字](/tools/roman)：阿拉伯数字与罗马数字互转
+- [烹饪单位](/tools/unit-cooking)：杯、勺、毫升、克互相换算
+- [鞋码换算](/tools/shoe-size)：脚长与中、欧、美、英码对照
+- [纸张尺寸](/tools/paper-size)：A / B / C 系列尺寸对照
+- [文本处理](/tools/text-tools)：大小写、去重、排序、加行号
+- [番茄钟](/tools/pomodoro)：25 分钟专注 + 5 分钟休息循环
+- [秒表计次](/tools/stopwatch)：毫秒精度计时，支持分段记录
+- [CSS 单位换算](/tools/css-unit)：px / rem / em / % / vw 互转
+- [复利计算器](/tools/compound-interest)：本金加定投的长期复利终值
+- [存款利息](/tools/deposit-interest)：定期存款利息与本息合计
+- [分期真实利率](/tools/credit-installment)：把手续费折算成实际年化
+- [税后工资](/tools/salary-net)：按五险一金与专项扣除算到手
+- [坐标转换](/tools/coordinate-convert)：WGS84 / 高德 / 百度坐标互转
+- [经纬度距离](/tools/geo-distance)：两点球面距离与方位角
+- [增值税计算](/tools/vat-calc)：含税价与不含税价互算
+- [毛利率计算](/tools/gross-margin)：毛利、加价率与目标定价
+- [配速计算](/tools/running-pace)：距离时间换算配速与速度
+- [体脂率估算](/tools/body-fat)：围度法估算体脂与去脂体重
+- [三角形计算](/tools/triangle-calc)：已知三边求面积和各个角
+- [补仓成本](/tools/stock-average)：加仓后的持仓成本与回本价
+
+## 生活实用（17 个）
+
+- [年龄计算](/tools/age-calc)：周岁虚岁、已活天数、下次生日
+- [星座查询](/tools/constellation)：按生日查星座、四象与守护星
+- [生肖属相](/tools/zodiac)：按年份查生肖、干支与纳音五行
+- [预产期计算](/tools/pregnancy-due)：按末次月经算预产期与当前孕周
+- [排卵期推算](/tools/fertility-window)：按周期推算排卵日与易孕窗口
+- [睡眠周期](/tools/sleep-cycle)：按入睡时间算最佳起床点
+- [血型遗传](/tools/blood-type)：父母血型推子女可能血型
+- [每日饮水量](/tools/water-intake)：按体重运动量算建议喝水
+- [服装尺码换算](/tools/clothing-size)：按身高体重换算中欧美码
+- [快递公司识别](/tools/courier-detect)：按单号前缀判断是哪家快递
+- [食物热量表](/tools/food-calorie)：常见食物每 100 克热量
+- [戒指尺寸换算](/tools/ring-size)：周长直径与中欧美号对照
+- [血压分级](/tools/blood-pressure)：按收缩压舒张压判断分级
+- [血糖分级](/tools/blood-sugar)：空腹与餐后血糖区间判读
+- [酒精摄入估算](/tools/alcohol-intake)：按酒量酒精度算纯酒精克数
+- [孩子身高预测](/tools/child-height)：按父母身高算遗传靶身高
+- [家电耗电计算](/tools/appliance-power)：按功率与时长算电费
+
+## 学习教育（21 个）
+
+- [一元二次方程](/tools/quadratic)：求根、判别式与顶点坐标
+- [分数计算器](/tools/fraction-calc)：分数加减乘除并约分
+- [最大公约数 / 最小公倍数](/tools/gcd-lcm)：多个整数的公约数与公倍数
+- [质因数分解](/tools/prime-factor)：分解质因数并数约数个数
+- [三角函数值](/tools/trig-table)：角度弧度互转与六个函数值
+- [排列组合](/tools/permutation)：算排列数、组合数与阶乘
+- [统计数据计算](/tools/statistics)：平均、中位、标准差一次算完
+- [口算题生成](/tools/mental-math)：按难度批量生成口算题与答案
+- [英语音标表](/tools/ipa-table)：44 个音标与例词对照
+- [元素周期表](/tools/periodic-table)：118 种元素的符号与原子量
+- [二元一次方程组](/tools/linear-system)：两个方程求解与图形交点
+- [数列计算](/tools/sequence)：等差等比数列的通项与求和
+- [对数计算](/tools/logarithm)：任意底对数与常用换算
+- [物理公式速查](/tools/physics-formulas)：力学电磁热学常用公式
+- [不规则动词表](/tools/irregular-verbs)：常见动词三态与释义
+- [摩尔质量](/tools/molar-mass)：按化学式算式量与元素占比
+- [化学方程式配平](/tools/chemical-balance)：按元素守恒自动求系数
+- [一元三次方程](/tools/cubic-equation)：求根、判别式与实根个数
+- [矩阵行列式](/tools/matrix-determinant)：2–5 阶行列式与可逆判断
+- [二项分布](/tools/binomial-distribution)：n 次试验命中 k 次的概率
+- [乘法口诀表](/tools/multiplication-table)：生成 1–12 的乘法表
+
+## 专题
+
+按使用场景把工具串成推荐顺序，适合「不知道用哪个」时按图索骥。
+
+- [图片处理一条龙](/topics/image-workflow)：压缩、裁剪、水印、九宫格、图标
+- [JSON 与配置文件](/topics/json-config)：格式化、转换、取值、反推 Schema
+- [前端排查工具包](/topics/frontend-debug)：时间戳、哈希、正则、状态码
+- [身体数据计算](/topics/health-calc)：BMI、体脂、血压、血糖
+- [中学理科工具](/topics/student-tools)：方程、配平、行列式、统计
+- [地图与坐标](/topics/geo-tools)：三套坐标系互转与球面距离
 
 ## 页面
 
-- [使用指南](/#/guides)：22 篇原创教程，覆盖入门概念与排查思路
-  - [JSON 格式化：从报错到定位到具体那一行](/#/guides/json-format-errors)
-  - [网站打不开时，先做这 5 步 DNS 排查](/#/guides/dns-troubleshooting)
-  - [Base64 不是加密：它到底能做什么](/#/guides/base64-is-not-encryption)
-  - [为什么你的正则会让浏览器卡死：ReDoS](/#/guides/regex-redos)
-  - [时间戳、时区与「今天」](/#/guides/timestamp-timezone)
-  - [URL 编码完全指南](/#/guides/url-encoding-guide)
-  - [HTTP 状态码入门：401 和 403 到底差在哪](/#/guides/http-status-codes)
-  - [DNS 记录类型：A、CNAME、MX、TXT 各自在干什么](/#/guides/dns-record-types)
-  - [Cron 表达式入门：五个星号到底怎么读](/#/guides/cron-basics)
-  - [UUID 有五个版本，为什么新项目该用 v7](/#/guides/uuid-versions)
-  - [IP 地址入门：192.168 开头的地址为什么上不了网](/#/guides/ip-address-basics)
-  - [为什么 1TB 硬盘插上只有 931GB](/#/guides/byte-units)
-  - [ASCII、GBK、Unicode、UTF-8：乱码到底是怎么产生的](/#/guides/charset-encoding)
-  - [哈希、加密、编码：三个词天天被混用](/#/guides/hash-encryption-encoding)
-  - [图片格式怎么选：JPG、PNG、WebP、AVIF、SVG](/#/guides/image-formats)
-  - [Cache-Control 怎么写：为什么发版后用户还看到旧页面](/#/guides/browser-cache)
-  - [HTTPS 到底加密了什么：一次握手要解决三个问题](/#/guides/https-handshake)
-  - [为什么页面会卡死：主线程与 Web Worker](/#/guides/web-worker)
-  - [JWT 该存在哪：localStorage、Cookie 还是内存](/#/guides/jwt-storage)
-  - [CDN 是怎么让网站变快的](/#/guides/cdn-basics)
-  - [DevTools 的 Network 面板：排查问题的第一现场](/#/guides/devtools-network)
-  - [正则入门：从匹配一个手机号开始](/#/guides/regex-basics)
-- [关于](/#/about)：项目定位、技术选择与联系方式
-- [隐私说明](/#/privacy)：数据处理方式、联网接口清单、广告说明
-- [服务条款](/#/terms)：服务范围、使用限制、结果准确性免责
-- [联系与反馈](/#/contact)：问题反馈渠道与所需信息
-- [设置](/#/settings)：主题、联网开关、清除本地缓存
+- [使用指南](/guides)：25 篇原创教程，覆盖入门概念与排查思路
+  - [JSON 格式化：从报错到定位到具体那一行](/guides/json-format-errors)
+  - [网站打不开时，先做这 5 步 DNS 排查](/guides/dns-troubleshooting)
+  - [Base64 不是加密：它到底能做什么](/guides/base64-is-not-encryption)
+  - [为什么你的正则会让浏览器卡死：ReDoS](/guides/regex-redos)
+  - [时间戳、时区与「今天」](/guides/timestamp-timezone)
+  - [URL 编码完全指南](/guides/url-encoding-guide)
+  - [HTTP 状态码入门：401 和 403 到底差在哪](/guides/http-status-codes)
+  - [DNS 记录类型：A、CNAME、MX、TXT 各自在干什么](/guides/dns-record-types)
+  - [Cron 表达式入门：五个星号到底怎么读](/guides/cron-basics)
+  - [UUID 有五个版本，为什么新项目该用 v7](/guides/uuid-versions)
+  - [IP 地址入门：192.168 开头的地址为什么上不了网](/guides/ip-address-basics)
+  - [为什么 1TB 硬盘插上只有 931GB](/guides/byte-units)
+  - [ASCII、GBK、Unicode、UTF-8：乱码到底是怎么产生的](/guides/charset-encoding)
+  - [哈希、加密、编码：三个词天天被混用](/guides/hash-encryption-encoding)
+  - [图片格式怎么选：JPG、PNG、WebP、AVIF、SVG](/guides/image-formats)
+  - [Cache-Control 怎么写：为什么发版后用户还看到旧页面](/guides/browser-cache)
+  - [HTTPS 到底加密了什么：一次握手要解决三个问题](/guides/https-handshake)
+  - [为什么页面会卡死：主线程与 Web Worker](/guides/web-worker)
+  - [JWT 该存在哪：localStorage、Cookie 还是内存](/guides/jwt-storage)
+  - [CDN 是怎么让网站变快的](/guides/cdn-basics)
+  - [DevTools 的 Network 面板：排查问题的第一现场](/guides/devtools-network)
+  - [正则入门：从匹配一个手机号开始](/guides/regex-basics)
+  - [化学方程式配平：为什么系数几乎总是唯一的](/guides/chemical-balance-method)
+  - [体脂率为什么总在波动：围度法的误差到底有多大](/guides/body-fat-error-sources)
+  - [坐标偏移 500 米：WGS84、GCJ02、BD09 到底差在哪](/guides/coordinate-offset-explained)
+- [关于](/about)：项目定位、技术选择与联系方式
+- [隐私说明](/privacy)：数据处理方式、联网接口清单、广告说明
+- [服务条款](/terms)：服务范围、使用限制、结果准确性免责
+- [联系与反馈](/contact)：问题反馈渠道与所需信息
+- [设置](/settings)：主题、联网开关、清除本地缓存
 
 ## 引用建议
 
-引用本站时请以「ZT 工具箱」为名，并注明工具在浏览器本地运行、不上传数据这一特性。工具页面链接形如 `/#/tools/json-formatter`（Hash 路由）。
+引用本站时请以「ZT 工具箱」为名，并注明工具在浏览器本地运行、不上传数据这一特性。工具页面链接形如 `/tools/json-formatter`，文章形如 `/guides/xxx`，每个页面都有独立地址。

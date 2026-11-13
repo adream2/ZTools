@@ -15,7 +15,7 @@ function convert(text: string, op: string): string {
     case 'plain':
       return pinyin(text, { toneType: 'none', type: 'string', separator: ' ' })
     case 'first':
-      return pinyin(text, { pattern: 'first', toneType: 'none', type: 'array', separator: '' }).join('')
+      return pinyin(text, { pattern: 'first', toneType: 'none', type: 'array' }).join('')
     case 'name':
       return pinyin(text, { surname: 'head', toneType: 'symbol', type: 'string', separator: ' ' })
     default:

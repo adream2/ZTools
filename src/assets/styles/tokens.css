@@ -79,6 +79,8 @@
   --c-cat-webmaster: #ff7a6b;
   --c-cat-content: #3fc9a4;
   --c-cat-calc: #f5b73d;
+  --c-cat-life: #ff7fa8;
+  --c-cat-edu: #45b0f5;
 
   /* ---- 黏土阴影三件套 ---- */
   --clay-raised:
@@ -162,6 +164,8 @@
   --c-cat-webmaster: #ff9b8f;
   --c-cat-content: #5ddcbb;
   --c-cat-calc: #ffcb6b;
+  --c-cat-life: #ff9dbe;
+  --c-cat-edu: #71c6ff;
 
   /* 暗色不靠投影，靠提亮 + 极细内描边 */
   --clay-raised:

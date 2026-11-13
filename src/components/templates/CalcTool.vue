@@ -2,6 +2,8 @@
 import { computed, reactive } from 'vue'
 import BaseInput from '../ui/BaseInput.vue'
 import BaseSelect from '../ui/BaseSelect.vue'
+import BaseSwitch from '../ui/BaseSwitch.vue'
+import BaseTextarea from '../ui/BaseTextarea.vue'
 import CopyButton from '../ui/CopyButton.vue'
 import Field from '../ui/Field.vue'
 import type { CalcLogic } from './types'
@@ -12,7 +14,7 @@ type Value = string | number
 const values = reactive<Record<string, Value>>({})
 
 for (const f of props.logic.FIELDS) {
-  values[f.key] = f.default ?? (f.type === 'number' ? 0 : '')
+  values[f.key] = f.default ?? (f.type === 'switch' ? 0 : f.type === 'number' ? 0 : '')
 }
 
 const output = computed(() => {
@@ -32,7 +34,11 @@ const allText = computed(() => output.value.map((r) => `${r.label}: ${r.value}`)
 <template>
   <div class="tmpl">
     <div class="fields">
-      <div v-for="f in logic.FIELDS" :key="f.key" class="field">
+      <div
+        v-for="f in logic.FIELDS"
+        :key="f.key"
+        :class="['field', { 'field--wide': f.type === 'textarea' }, { 'field--switch': f.type === 'switch' }]"
+      >
         <Field :label="f.label" :hint="f.hint">
           <BaseSelect
             v-if="f.type === 'select'"
@@ -40,12 +46,23 @@ const allText = computed(() => output.value.map((r) => `${r.label}: ${r.value}`)
             :options="optionsOf(f.key)"
             @update:model-value="values[f.key] = $event"
           />
+          <BaseTextarea
+            v-else-if="f.type === 'textarea'"
+            :model-value="String(values[f.key])"
+            :rows="5"
+            @update:model-value="values[f.key] = $event"
+          />
+          <BaseSwitch
+            v-else-if="f.type === 'switch'"
+            :model-value="Boolean(values[f.key])"
+            @update:model-value="values[f.key] = $event ? 1 : 0"
+          />
           <BaseInput
             v-else
             :model-value="String(values[f.key])"
-            :type="f.type === 'number' ? 'number' : 'text'"
+            :type="f.type === 'number' ? 'number' : f.type === 'date' ? 'date' : 'text'"
             :mono="f.type === 'number'"
-            :placeholder="f.hint || ''"
+            :placeholder="f.type === 'date' ? '' : f.hint || ''"
             @update:model-value="values[f.key] = f.type === 'number' ? Number($event) : $event"
           />
         </Field>
@@ -77,6 +94,14 @@ const allText = computed(() => output.value.map((r) => `${r.label}: ${r.value}`)
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: var(--sp-3);
+}
+.field--wide {
+  grid-column: 1 / -1;
+}
+.field--switch :deep(.field__body) {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
 }
 .results {
   display: grid;

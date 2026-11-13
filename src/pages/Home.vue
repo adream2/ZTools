@@ -2,17 +2,14 @@
 import { computed } from 'vue'
 import { CATEGORIES_WITH_TOOLS, VISIBLE_TOOLS, getTool } from '@/core/registry'
 import { recentTools } from '@/core/prefs'
-import { APP_NAME } from '@/core/config'
+import { APP_NAME, categoryTone } from '@/core/config'
+import { TOPICS } from '@/content/topics'
 import { CLAIMS_NO_ADS } from '@/core/site-config'
 import { GUIDES, GUIDES_SORTED } from '@/content/guides'
 import AdSlot from '@/components/ads/AdSlot.vue'
 
-const CAT_COLOR: Record<string, string> = {
-  dev: 'var(--c-cat-dev)',
-  webmaster: 'var(--c-cat-webmaster)',
-  content: 'var(--c-cat-content)',
-  calc: 'var(--c-cat-calc)',
-}
+/** 首页只展示前三个专题，全量在 /topics */
+const FEATURED_TOPICS = TOPICS.slice(0, 3)
 
 const total = VISIBLE_TOOLS.length
 const networkCount = VISIBLE_TOOLS.filter((t) => (t.meta.privacy ?? 'local') === 'network').length
@@ -58,7 +55,7 @@ const FAQ = [
       <div class="grid grid--recent">
         <RouterLink v-for="t in recent" :key="t.meta.id" :to="`/tools/${t.meta.id}`" class="card card--mini">
           <span class="card__row">
-            <span class="card__dot" :style="{ background: CAT_COLOR[t.meta.category] }" aria-hidden="true" />
+            <span class="card__dot" :style="{ background: categoryTone(t.meta.category) }" aria-hidden="true" />
             <span class="card__title">{{ t.meta.title }}</span>
           </span>
         </RouterLink>
@@ -67,7 +64,7 @@ const FAQ = [
 
     <section v-for="cat in CATEGORIES_WITH_TOOLS" :key="cat.id" class="block">
       <div class="head">
-        <span class="head__dot" :style="{ background: CAT_COLOR[cat.id] }" aria-hidden="true" />
+        <span class="head__dot" :style="{ background: categoryTone(cat.id) }" aria-hidden="true" />
         <h2 class="head__title">{{ cat.title }}</h2>
         <span class="head__count">{{ cat.tools.length }}</span>
         <span class="head__line" aria-hidden="true" />
@@ -86,6 +83,30 @@ const FAQ = [
           <span class="card__desc">{{ t.meta.summary }}</span>
           <span v-if="t.meta.badge === 'limited'" class="card__tag">受限</span>
           <span v-else-if="(t.meta.privacy ?? 'local') === 'network'" class="card__tag card__tag--net">需联网</span>
+        </RouterLink>
+      </div>
+    </section>
+
+    <section class="block topics-block" aria-labelledby="topics-title">
+      <div class="head">
+        <span class="head__dot" style="background: var(--c-accent)" aria-hidden="true" />
+        <h2 id="topics-title" class="head__title">专题</h2>
+        <span class="head__count">{{ TOPICS.length }}</span>
+        <span class="head__line" aria-hidden="true" />
+        <RouterLink to="/topics" class="head__more">全部专题 →</RouterLink>
+      </div>
+      <div class="topic-grid">
+        <RouterLink
+          v-for="t in FEATURED_TOPICS"
+          :key="t.id"
+          :to="`/topics/${t.id}`"
+          class="topic"
+          :style="{ '--tone': t.tone }"
+        >
+          <span class="topic__bar" aria-hidden="true" />
+          <span class="topic__title">{{ t.title }}</span>
+          <span class="topic__summary">{{ t.summary }}</span>
+          <span class="topic__meta">{{ t.tools.length }} 个工具{{ t.guides?.length ? ' · 含指南' : '' }}</span>
         </RouterLink>
       </div>
     </section>
@@ -261,6 +282,52 @@ const FAQ = [
 /* ---- 使用指南 ---- */
 .guides-block {
   margin-bottom: var(--sp-6);
+}
+.topics-block {
+  margin-bottom: var(--sp-5);
+}
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(272px, 1fr));
+  gap: var(--sp-3);
+}
+.topic {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 14px 17px 14px 21px;
+  border-radius: var(--radius-container-md);
+  background: var(--c-surface);
+  box-shadow: var(--clay-raised);
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  transition: transform var(--dur-fast) var(--ease);
+}
+.topic:hover {
+  transform: translateY(-2px);
+}
+.topic__bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--tone);
+}
+.topic__title {
+  font-size: var(--fs-md);
+  font-weight: 600;
+}
+.topic__summary {
+  font-size: var(--fs-xs);
+  color: var(--c-text-2);
+  line-height: 1.6;
+}
+.topic__meta {
+  font-size: var(--fs-2xs);
+  color: var(--c-text-3);
 }
 .guide-grid {
   display: grid;

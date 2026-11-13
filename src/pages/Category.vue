@@ -2,19 +2,11 @@
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { CATEGORIES_WITH_TOOLS } from '@/core/registry'
+import { categoryTone } from '@/core/config'
 import ClayIcon from '@/components/ui/ClayIcon.vue'
 import EmptyState from '@/components/ui/EmptyState.vue'
 import AdSlot from '@/components/ads/AdSlot.vue'
-import type { ToolCategoryId } from '@/core/types'
-
 const route = useRoute()
-
-const CAT_COLOR: Record<ToolCategoryId, string> = {
-  dev: 'var(--c-cat-dev)',
-  webmaster: 'var(--c-cat-webmaster)',
-  content: 'var(--c-cat-content)',
-  calc: 'var(--c-cat-calc)',
-}
 
 const cat = computed(() => CATEGORIES_WITH_TOOLS.find((c) => c.id === route.params.cat))
 
@@ -33,8 +25,8 @@ const grouped = computed(() => {
 
 <template>
   <div v-if="cat" class="cat-page">
-    <header class="head" :style="{ '--tone': CAT_COLOR[cat.id] }">
-      <ClayIcon :tone="CAT_COLOR[cat.id]" :path="cat.icon" size="lg" />
+    <header class="head" :style="{ '--tone': categoryTone(cat.id) }">
+      <ClayIcon :tone="categoryTone(cat.id)" :path="cat.icon" size="lg" />
       <div class="head__text">
         <h1>{{ cat.title }}</h1>
         <p>{{ cat.summary }} · {{ cat.tools.length }} 个工具</p>
@@ -50,7 +42,7 @@ const grouped = computed(() => {
           :key="t.meta.id"
           :to="`/tools/${t.meta.id}`"
           class="tool"
-          :style="{ '--tone': CAT_COLOR[cat.id] }"
+          :style="{ '--tone': categoryTone(cat.id) }"
         >
           <span class="tool__top">
             <span class="tool__title">{{ t.meta.title }}</span>

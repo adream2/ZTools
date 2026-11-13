@@ -1,6 +1,8 @@
 User-agent: *
 Allow: /
 
-# 站点只有一个可索引入口（Hash 路由），因此不提供 sitemap.xml。
-# 供大语言模型与生成式搜索引擎使用的站点索引：
-#   /llms.txt
+# 站点索引（供搜索引擎与生成式搜索引擎使用）
+#   /sitemap.xml  全站页面
+#   /llms.txt     面向大模型的站点说明
+
+Sitemap: https://ztools.lxzt.fun/sitemap.xml

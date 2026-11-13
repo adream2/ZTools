@@ -5,7 +5,6 @@ import BaseButton from '@/components/ui/BaseButton.vue'
 import BaseSelect from '@/components/ui/BaseSelect.vue'
 import FileDropZone from '@/components/ui/FileDropZone.vue'
 import { formatBytes } from '@/tools/dev/hash/logic'
-import { toastError } from '@/core/toast'
 
 const file = ref<File | null>(null)
 const source = ref('')

@@ -1,0 +1,20 @@
+{
+  "site": {
+    "domain": "ztools.lxzt.fun",
+    "original_articles": 25,
+    "site_age_days": 4,
+    "has_privacy_policy": true,
+    "has_about_page": true,
+    "has_contact_page": true,
+    "has_ads_txt": false,
+    "crawlable": true,
+    "https_enabled": true,
+    "mobile_friendly": true,
+    "nav_menu_present": true,
+    "copied_content_ratio": 0,
+    "avg_words_per_article": 967,
+    "has_prohibited_content": false,
+    "traffic_from_ads": false,
+    "source_file": "docs/adsense/input.json（人工核对 + 线上探测，2026-11-13 修复 history 路由与预渲染后）"
+  }
+}

@@ -1,5 +1,5 @@
 import { defineWorkerHandler } from '@/core/worker/handler'
-import { formatJson, jsonStats, minifyJson, sortDeep, parseJson, type FormatOptions } from './logic'
+import { formatJson, jsonStats, sortDeep, parseJson, type FormatOptions } from './logic'
 
 export interface JsonTaskPayload {
   text: string

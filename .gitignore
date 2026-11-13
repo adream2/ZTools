@@ -15,3 +15,6 @@ coverage
 
 # 项目内 AI 记忆，不进仓库
 .workbuddy/
+
+# TypeScript 增量构建信息
+*.tsbuildinfo

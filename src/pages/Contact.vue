@@ -17,7 +17,7 @@ import { APP_NAME } from '@/core/config'
     <h2>反馈工具问题</h2>
     <p>为了能快速定位，麻烦在邮件里带上这几项：</p>
     <ul>
-      <li>工具名称与链接（形如 <code>#/tools/json-formatter</code>）</li>
+      <li>工具名称与链接（形如 <code>/tools/json-formatter</code>）</li>
       <li>你输入的示例数据（脱敏后）</li>
       <li>期望结果与实际结果</li>
       <li>浏览器与版本，例如「Chrome 131 / macOS 15」</li>

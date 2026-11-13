@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onBeforeUnmount, ref, watch } from 'vue'
 import DiffWorker from './worker?worker'
-import { MAX_INPUT, changeRatio, type DiffMode, type DiffResult } from './logic'
+import { MAX_INPUT, changeRatio, type DiffResult } from './logic'
 import { useWorkerTask } from '@/core/worker/useWorkerTask'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import BaseTabs from '@/components/ui/BaseTabs.vue'

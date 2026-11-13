@@ -3,18 +3,10 @@ import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { CATEGORIES_WITH_TOOLS } from '@/core/registry'
 import { drawerOpen } from '@/core/ui-state'
-import { CATEGORIES } from '@/core/config'
-import type { ToolCategoryId } from '@/core/types'
+import { CATEGORIES, categoryTone } from '@/core/config'
 
 const route = useRoute()
 const emit = defineEmits<{ navigate: [] }>()
-
-const CAT_COLOR: Record<ToolCategoryId, string> = {
-  dev: 'var(--c-cat-dev)',
-  webmaster: 'var(--c-cat-webmaster)',
-  content: 'var(--c-cat-content)',
-  calc: 'var(--c-cat-calc)',
-}
 
 const open = ref<Record<string, boolean>>({})
 
@@ -43,7 +35,7 @@ const catTitle = (id: string) => CATEGORIES.find((c) => c.id === id)?.title ?? '
   <nav class="nav" aria-label="工具分类">
     <section v-for="cat in CATEGORIES_WITH_TOOLS" :key="cat.id" class="nav__group">
       <button type="button" class="nav__cat" :class="{ 'is-collapsed': !isOpen(cat.id) }" @click="toggle(cat.id)">
-        <span class="nav__dot" :style="{ background: CAT_COLOR[cat.id] }" aria-hidden="true" />
+        <span class="nav__dot" :style="{ background: categoryTone(cat.id) }" aria-hidden="true" />
         <span class="nav__cat-name">{{ catTitle(cat.id) }}</span>
         <span class="nav__count">{{ cat.tools.length }}</span>
         <svg class="nav__chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true">

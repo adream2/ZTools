@@ -2,7 +2,7 @@
 import PrivacyBadge from '../ui/PrivacyBadge.vue'
 import ClayIcon from '../ui/ClayIcon.vue'
 import type { PrivacyLevel, ToolCategoryId } from '@/core/types'
-import { CATEGORIES } from '@/core/config'
+import { CATEGORIES, categoryTone } from '@/core/config'
 
 const props = withDefaults(
   defineProps<{
@@ -17,13 +17,6 @@ const props = withDefaults(
   { privacy: 'local' },
 )
 
-const CAT_COLOR: Record<ToolCategoryId, string> = {
-  dev: 'var(--c-cat-dev)',
-  webmaster: 'var(--c-cat-webmaster)',
-  content: 'var(--c-cat-content)',
-  calc: 'var(--c-cat-calc)',
-}
-
 const cat = props.category ? CATEGORIES.find((c) => c.id === props.category) : undefined
 const badgeText = { new: '新工具', beta: '测试中', limited: '功能受限' } as const
 </script>
@@ -31,7 +24,7 @@ const badgeText = { new: '新工具', beta: '测试中', limited: '功能受限'
 <template>
   <article class="panel clay-card">
     <header class="panel__head">
-      <ClayIcon v-if="cat" :tone="CAT_COLOR[cat.id]" :path="cat.icon" size="lg" />
+      <ClayIcon v-if="cat" :tone="categoryTone(cat.id)" :path="cat.icon" size="lg" />
       <div class="panel__meta">
         <div class="panel__crumb">{{ cat?.title ?? '' }}</div>
         <div class="panel__title-row">

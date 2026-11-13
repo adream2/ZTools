@@ -40,8 +40,11 @@ function removeRule(gi: number, ri: number): void {
   config.value.groups[gi]?.rules.splice(ri, 1)
 }
 
-function addSitemap(): void {
-  config.value.sitemaps.push('https://')
+function setSitemaps(text: string): void {
+  config.value.sitemaps = text
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter(Boolean)
 }
 
 function download(): void {
@@ -102,12 +105,13 @@ function doParse(): void {
       </div>
 
       <div class="sitemaps">
-        <span class="u-xs u-dim">Sitemap</span>
-        <div v-for="(s, i) in config.sitemaps" :key="i" class="sitemap">
-          <BaseInput v-model="config.sitemaps[i]" mono size="sm" placeholder="https://example.com/sitemap.xml" />
-          <button type="button" class="rule__del" aria-label="删除" @click="config.sitemaps.splice(i, 1)">×</button>
-        </div>
-        <BaseButton size="sm" variant="ghost" @click="addSitemap">+ 添加 Sitemap</BaseButton>
+        <span class="u-xs u-dim">Sitemap（一行一个）</span>
+        <BaseTextarea
+          :model-value="config.sitemaps.join('\n')"
+          :rows="3"
+          placeholder="https://example.com/sitemap.xml"
+          @update:model-value="setSitemaps"
+        />
       </div>
 
       <div v-if="issues.length" class="issues">

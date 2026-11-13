@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, ref } from 'vue'
+import { computed, ref } from 'vue'
 import { formatMs, lapStats, type Lap } from './logic'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import CopyButton from '@/components/ui/CopyButton.vue'

@@ -1,6 +1,6 @@
 # ZT 工具箱
 
-纯静态中文在线工具箱，120 个工具，115 个完全在浏览器本地运行。黏土拟态（claymorphism）界面，可安装成 PWA。
+纯静态中文在线工具箱，202 个工具，197 个完全在浏览器本地运行。黏土拟态（claymorphism）界面，可安装成 PWA。
 
 同一份产物部署到 **Cloudflare Workers / 腾讯 EdgeOne Pages / GitHub Pages**，零后端、零边缘函数、零 UI 框架、零 CDN。
 
@@ -9,8 +9,9 @@
 - **本地优先**：能放进浏览器的全部本地算，联网工具明确标注，只在你点查询时才发请求
 - **黏土视觉**：大圆角 + 双层阴影 + 内高光，亮色主调、暗色适配；颜色/圆角/阴影全部走 token
 - **重活隔离**：JSON/YAML 解析、哈希、正则、文本对比跑在 Web Worker，正则带 3 秒超时防 ReDoS
+- **专题聚合**：按场景把工具串成推荐顺序（`/#/topics`），新工具只在 `topics.ts` 登记一次
 - **kind 驱动注册**：文本处理类工具只需 `meta.ts` + `logic.ts`，不写 UI，单工具 30–80 行
-- **三平台同源**：Hash 路由 + 单一 base 来源，子路径部署不会白屏
+- **三平台同源**：History 路由 + 单一 base 来源，每个页面独立地址；SPA 回退由 Workers 的 `not_found_handling` 与自动生成的 `404.html` 兜住
 
 ## 快速开始
 
@@ -19,7 +20,7 @@ npm install
 npm run dev          # 开发
 npm run test         # 单元测试
 npm run build        # 类型检查 + 构建
-npm run verify       # 元数据 + 样式 + 产物三重校验
+npm run verify       # 元数据 + 文案数量 + 样式 + 产物四重校验
 npm run icons        # 重新生成 PWA 图标
 ```
 
@@ -29,10 +30,13 @@ Node >= 20。
 
 | 分类 | 数量 | 覆盖 |
 | --- | --- | --- |
-| 开发调试 | 44 | 格式化、编解码、加密、生成、ID 解析、配置生成 |
+| 开发调试 | 64 | 格式化、编解码、加密、生成、ID 解析、配置生成 |
 | 站长网络 | 20 | IP/DNS、可达性、SEO、安全头、图标、二维码 |
-| 内容创作 | 25 | 图片、Markdown、文本排版、CSS 生成器、符号 |
-| 计算换算 | 31 | 金融、健康、日期、随机、单位、生活 |
+| 内容创作 | 37 | 图片、Markdown、文本排版、CSS 生成器、符号 |
+| 计算换算 | 43 | 金融、健康、日期、随机、单位、地理、运动 |
+| 生活实用 | 17 | 年龄、星座、生肖、孕期、睡眠、血型、尺码、热量 |
+| 学习教育 | 21 | 数学、统计、化学、物理、语言 |
+| **合计** | **202** | 六类场景，197 个纯本地 |
 
 ## 目录结构
 
@@ -43,7 +47,7 @@ src/
 │  ├─ types.ts           # ToolMeta（含 kind / subcategory）
 │  └─ worker/            # 极简 RPC：超时、崩溃重建、进度回传
 ├─ components/
-│  ├─ templates/         # 四种共享形态：TextOp / Generator / Lookup / Calc
+│  ├─ templates/         # 五种共享形态：TextOp / Generator / Lookup / Calc / FileOp
 │  ├─ ui/                # ClayCard / ClayIcon 与原子组件
 │  └─ layout/            # 悬浮胶囊侧栏、顶栏、工具面板
 ├─ pages/                # Home / Category / ToolView / Settings / 关于 / 隐私 / 404
@@ -54,7 +58,7 @@ src/
 
 ### A. 命中模板形态（省事）
 
-四个模板覆盖约一半工具：`text-op`（输入→操作→输出）、`generator`（表单→批量结果）、`lookup`（数据集搜索）、`calc`（输入→实时结果）。
+五个模板覆盖绝大部分工具：`text-op`（输入→操作→输出）、`generator`（表单→批量结果）、`lookup`（数据集搜索）、`calc`（输入→实时结果）、`file-op`（文件进→文件 / 文本出，自带预览与批量下载）。
 
 只写两个文件：
 
@@ -160,15 +164,19 @@ cp dist/index.html dist/404.html
 - **语义化结构**：首页只有一个 `h1`，工具列表是 `nav` + 链接文本，FAQ 用 `dl`，页脚独立
 - **完整 meta**：title / description / keywords / canonical / robots / OG / Twitter，工具页会动态替换 title 与 description
 - **结构化数据**：`WebSite` + `WebApplication` + `FAQPage`（JSON-LD，内联在 index.html）
-- **无 JS 也能读**：`<noscript>` 里有 120 个工具的分组文本清单和 FAQ，爬虫可直接提取
+- **无 JS 也能读**：`<noscript>` 里有 202 个工具的分组文本清单和 FAQ，爬虫可直接提取
 - **`/llms.txt`**：按 llms.txt 规范给出站点事实（工具数、隐私模型、免费）与全部工具索引，供生成式引擎抓取
 - **AI 友好的正文**：首页底部有「关于 + 4 条 FAQ」，用直接陈述句回答「要不要联网」「数据会不会上传」「能不能离线」这类高频问题
 
-### 硬限制
+### 可索引性
 
-Hash 路由意味着**所有工具页共享同一个可索引 URL**，`/#/tools/json-formatter` 不会被搜索引擎当成独立页面收录。当前做法是把全部工具的文本、描述与 FAQ 压到首页承载。
+三层措施叠起来：
 
-要真正做到每个工具一个可索引页面，需要改成 History 路由 + 构建期预渲染（或 SSR），并处理 EdgeOne 不支持 SPA rewrite 的问题——属于架构级改动，不在当前范围内。
+1. **History 路由**：每个页面独立地址（`/tools/json-formatter`、`/guides/xxx`），不再是共享的 hash 片段
+2. **构建期预渲染**：`scripts/prerender.mjs` 把 25 篇文章与 6 个专题写成带正文的静态 HTML（`dist/guides/<slug>/index.html`），爬虫无需执行 JS 就能拿到内容
+3. **`sitemap.xml`**：240 条 URL（202 工具 + 25 文章 + 6 专题 + 静态页），构建时由 `scripts/gen-sitemap.mjs` 生成
+
+工具页仍是 SPA（首屏 HTML 为空壳），依靠 Google 的 JS 渲染完成收录；文章与专题页是真静态，AdSense 审核与首屏抓取都拿得到正文。SPA 回退：Cloudflare Workers 用 `not_found_handling: single-page-application`，EdgeOne Pages 与 GitHub Pages 用构建时复制的 `404.html`。
 
 ## 内容体系（AdSense 审核的关键）
 
@@ -293,7 +301,7 @@ AdSense 对「工具类聚合站」审核偏严，常见拒因是**内容量不�
 
 | 决策 | 原因 |
 | --- | --- |
-| Hash 路由 | EdgeOne Pages 不支持 SPA rewrite，这是三平台唯一零配置方案 |
+| History 路由 + 预渲染 | 每页独立地址是 SEO 与 AdSense 的前提；回退成本被 `404.html` 与 `not_found_handling` 摊掉 |
 | 不做全量 precache | 100+ 工具全量预缓存约 4MB，弱网安装会超时失败，反而失去离线能力 |
 | 分类色只做装饰 | lemon/coral 当链接色 WCAG 直接不合格，交互色统一用 accent |
 | 模板是默认值不是强制 | 溢出就独立写，避免模板里长出 `v-if="kind === ..."` |

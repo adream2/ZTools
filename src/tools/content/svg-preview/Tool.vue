@@ -33,6 +33,7 @@ const parsed = computed(() => {
 })
 
 const optimized = computed(() => (parsed.value.info ? optimizeSvg(parsed.value.info.svg) : ''))
+const optimizedSize = computed(() => new Blob([optimized.value]).size)
 
 async function exportPng(): Promise<void> {
   const info = parsed.value.info
@@ -96,7 +97,7 @@ const bgClass = computed(() => `bg--${bg.value}`)
       <span>尺寸 <b>{{ parsed.info.width }} × {{ parsed.info.height }}</b></span>
       <span>viewBox <b>{{ parsed.info.viewBox || '未声明' }}</b></span>
       <span>源码 <b>{{ (parsed.info.size / 1024).toFixed(1) }} KB</b></span>
-      <span>优化后 <b>{{ (new Blob([optimized]).size / 1024).toFixed(1) }} KB</b></span>
+      <span>优化后 <b>{{ (optimizedSize / 1024).toFixed(1) }} KB</b></span>
     </div>
 
     <div v-if="parsed.info?.warnings.length" class="warns">

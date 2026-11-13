@@ -57,7 +57,7 @@ let ok = 0
 const fails = []
 for (const t of tools) {
   const before = errors.length
-  await page.goto(`${BASE}#/tools/${t.id}`, { waitUntil: 'commit' })
+  await page.goto(`${BASE}tools/${t.id}`, { waitUntil: 'commit' })
   try {
     await page.waitForFunction(
       (expect) => document.querySelector('h1')?.textContent?.trim() === expect,

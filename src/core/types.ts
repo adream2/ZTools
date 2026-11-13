@@ -1,4 +1,9 @@
-export type ToolCategoryId = 'dev' | 'webmaster' | 'content' | 'calc'
+import type { CategoryId } from './categories'
+
+export type { ToolCategory } from './categories'
+
+/** 分类 id 由 categories.ts 派生，新增分类不用改这里 */
+export type ToolCategoryId = CategoryId
 
 /** 数据是否离开浏览器 */
 export type PrivacyLevel = 'local' | 'network'
@@ -7,10 +12,10 @@ export type PrivacyLevel = 'local' | 'network'
  * 工具形态。命中模板形态时只需要 meta.ts + logic.ts，不写 Tool.vue。
  * 溢出模板（需要自定义布局/交互）就留空，老老实实写 Tool.vue。
  */
-export type ToolKind = 'text-op' | 'generator' | 'lookup' | 'calc'
+export type ToolKind = 'text-op' | 'generator' | 'lookup' | 'calc' | 'file-op'
 
 export interface ToolMeta {
-  /** 全局唯一，同时作为 URL 段：/#/tools/{id} */
+  /** 全局唯一，同时作为 URL 段：/tools/{id} */
   id: string
   title: string
   /** 一句话说明，控制在 30 字内 */
@@ -33,15 +38,6 @@ export interface ToolMeta {
   kind?: ToolKind
   /** 工具页底部的使用提示，2–4 条，讲取舍与坑而不是重复功能名 */
   tips?: string[]
-}
-
-export interface ToolCategory {
-  id: ToolCategoryId
-  title: string
-  summary: string
-  /** 内联 SVG path（24x24 viewBox），避免图标库 */
-  icon: string
-  order: number
 }
 
 export interface ToolDefinition {

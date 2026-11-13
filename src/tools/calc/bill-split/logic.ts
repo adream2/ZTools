@@ -4,7 +4,7 @@ const FIELDS = [
   { key: 'total', label: '账单总额（元）', type: 'number' as const, default: 368, min: 0, step: 1 },
   { key: 'people', label: '人数', type: 'number' as const, default: 4, min: 1, max: 50 },
   { key: 'tip', label: '小费 / 服务费 %', type: 'number' as const, default: 0, min: 0, max: 30, step: 1 },
-  { key: 'round', label: '向上取整到元', type: 'switch' as const, default: true },
+  { key: 'round', label: '向上取整到元', type: 'switch' as const, default: 1 },
 ]
 
 const money = (n: number) => `${n.toFixed(2)} 元`

@@ -17,7 +17,7 @@ function slugify(text: string): string {
 }
 
 function withPinyin(text: string): string {
-  const converted = pinyin(text, { toneType: 'none', type: 'array', nonZh: 'consecutive', separator: ' ' })
+  const converted = pinyin(text, { toneType: 'none', type: 'array', nonZh: 'consecutive' })
   return slugify(converted.join(' '))
 }
 

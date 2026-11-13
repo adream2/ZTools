@@ -52,7 +52,7 @@ function pick(p: string): void {
       <div v-if="parsed.result.steps.length" class="steps">
         <span class="steps__label">解析路径</span>
         <span v-for="(s, i) in parsed.result.steps" :key="i" class="step">
-          {{ s.label }}<span class="step__type">{{ s.type }}</span>
+          {{ s.label }}
         </span>
       </div>
     </template>

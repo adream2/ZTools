@@ -2,9 +2,9 @@
 import { computed, nextTick, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { paletteOpen } from '@/core/ui-state'
-import { highlight, searchTools } from '@/core/search'
-import { CATEGORIES } from '@/core/config'
+import { highlight, searchAll, type SearchHit } from '@/core/search'
 import { CATEGORIES_WITH_TOOLS } from '@/core/registry'
+import { categoryTitle } from '@/core/config'
 
 const router = useRouter()
 const query = ref('')
@@ -12,14 +12,20 @@ const cursor = ref(0)
 const inputEl = ref<HTMLInputElement | null>(null)
 const listEl = ref<HTMLElement | null>(null)
 
-const results = computed(() => {
-  if (!query.value.trim()) {
-    return CATEGORIES_WITH_TOOLS.flatMap((c) => c.tools.slice(0, 6)).map((tool) => ({ tool, score: 0 }))
-  }
-  return searchTools(query.value, 14)
-})
+/** 空查询时展示各分类的前几个工具，作为入口 */
+const DEFAULT_HITS: SearchHit[] = CATEGORIES_WITH_TOOLS.flatMap((c) =>
+  c.tools.slice(0, 4).map((tool) => ({
+    kind: 'tool' as const,
+    id: tool.meta.id,
+    title: tool.meta.title,
+    summary: tool.meta.summary,
+    label: categoryTitle(c.id),
+    to: `/tools/${tool.meta.id}`,
+    score: 0,
+  })),
+)
 
-const catTitle = (id: string) => CATEGORIES.find((c) => c.id === id)?.title ?? ''
+const results = computed(() => (query.value.trim() ? searchAll(query.value, 14) : DEFAULT_HITS))
 
 watch(paletteOpen, async (open) => {
   if (open) {
@@ -40,7 +46,7 @@ function go(index: number): void {
   const hit = results.value[index]
   if (!hit) return
   close()
-  void router.push(`/tools/${hit.tool.meta.id}`)
+  void router.push(hit.to)
 }
 
 function onKeydown(e: KeyboardEvent): void {
@@ -81,7 +87,7 @@ function scrollIntoView(): void {
               ref="inputEl"
               v-model="query"
               class="palette__input"
-              placeholder="搜索工具…"
+              placeholder="搜索工具、专题、指南…"
               autocomplete="off"
               spellcheck="false"
               @keydown="onKeydown"
@@ -92,27 +98,30 @@ function scrollIntoView(): void {
           <div ref="listEl" class="palette__list">
             <button
               v-for="(hit, i) in results"
-              :key="hit.tool.meta.id"
+              :key="`${hit.kind}-${hit.id}`"
               type="button"
               :data-idx="i"
               :class="['palette__item', { 'is-active': i === cursor }]"
               @mouseenter="cursor = i"
               @click="go(i)"
             >
-              <span class="palette__item-main">
-                <span class="palette__title" v-html="highlight(hit.tool.meta.title, query)" />
-                <span class="palette__summary">{{ hit.tool.meta.summary }}</span>
+              <span class="palette__icon" :class="`palette__icon--${hit.kind}`" aria-hidden="true">
+                {{ hit.kind === 'tool' ? 'T' : hit.kind === 'topic' ? '专' : '文' }}
               </span>
-              <span class="palette__cat">{{ catTitle(hit.tool.meta.category) }}</span>
+              <span class="palette__item-main">
+                <span class="palette__title" v-html="highlight(hit.title, query)" />
+                <span class="palette__summary">{{ hit.summary }}</span>
+              </span>
+              <span class="palette__cat">{{ hit.label }}</span>
             </button>
-            <div v-if="!results.length" class="palette__empty">没有匹配的工具，换个关键词试试</div>
+            <div v-if="!results.length" class="palette__empty">没有匹配的内容，换个关键词试试</div>
           </div>
 
           <footer class="palette__foot">
             <span><kbd>↑</kbd><kbd>↓</kbd> 选择</span>
             <span><kbd>Enter</kbd> 打开</span>
             <span><kbd>Esc</kbd> 关闭</span>
-            <span class="palette__count">{{ results.length }} 个结果</span>
+            <span class="palette__count">{{ results.length }} 条结果</span>
           </footer>
         </div>
       </div>
@@ -205,6 +214,24 @@ function scrollIntoView(): void {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+.palette__icon {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-full);
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--c-on-accent);
+  background: var(--c-accent);
+}
+.palette__icon--topic {
+  background: var(--c-cat-content);
+}
+.palette__icon--guide {
+  background: var(--c-cat-calc);
 }
 .palette__cat {
   flex: none;

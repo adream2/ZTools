@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
 import JsBarcode from 'jsbarcode'
-import { DEFAULT_OPTIONS, FORMATS, download, svgToPng, validate, type BarcodeFormat } from './logic'
+import { FORMATS, download, svgToPng, validate, type BarcodeFormat } from './logic'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import BaseInput from '@/components/ui/BaseInput.vue'
 import BaseSelect from '@/components/ui/BaseSelect.vue'

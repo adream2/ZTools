@@ -79,7 +79,7 @@ export async function svgToPng(svg: SVGSVGElement, scale = 2): Promise<Blob> {
   return blob
 }
 
-export function download(blob: Blob | string, name: string, type: string): void {
+export function download(blob: Blob | string, name: string, _type: string): void {
   const url = typeof blob === 'string' ? blob : URL.createObjectURL(blob)
   const a = document.createElement('a')
   a.href = url

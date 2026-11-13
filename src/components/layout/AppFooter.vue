@@ -7,6 +7,7 @@ const version = __APP_VERSION__.split('+')[0]
 <template>
   <footer class="foot">
     <nav class="foot__links" aria-label="站点信息">
+      <RouterLink to="/topics">专题</RouterLink>
       <RouterLink to="/guides">使用指南</RouterLink>
       <span class="foot__sep" aria-hidden="true">·</span>
       <RouterLink to="/about">关于</RouterLink>

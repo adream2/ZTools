@@ -25,7 +25,8 @@ export function makeSvg(text: string, options: QrOptions): string {
   if (!value) return ''
   // uqr 在内容超出容量时抛错，交给调用方展示
   const qr = encode(value, { ecc: options.ecc, border: options.margin })
-  return renderSVG(qr, {
+  return renderSVG(value, {
+    ecc: options.ecc,
     pixelSize: Math.max(2, Math.round(options.size / (qr.size + options.margin * 2))),
     blackColor: options.dark,
     whiteColor: options.transparent ? '#00000000' : options.light,

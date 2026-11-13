@@ -16,7 +16,7 @@ import BaseSwitch from '@/components/ui/BaseSwitch.vue'
 import CopyButton from '@/components/ui/CopyButton.vue'
 import Field from '@/components/ui/Field.vue'
 import FileDropZone from '@/components/ui/FileDropZone.vue'
-import { toastError, toastOk } from '@/core/toast'
+import { toastError } from '@/core/toast'
 
 const mode = ref('text')
 const tabs = [
@@ -93,11 +93,6 @@ function download(): void {
   } catch (e) {
     toastError(e instanceof Error ? e.message : String(e))
   }
-}
-
-async function copyFile(): Promise<void> {
-  await navigator.clipboard.writeText(fileBase64.value)
-  toastOk('已复制')
 }
 
 function clearText(): void {

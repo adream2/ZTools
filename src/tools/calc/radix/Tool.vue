@@ -4,7 +4,6 @@ import { BASES, asciiHint, byteLength, convertAll, parseInBase } from './logic'
 import BaseInput from '@/components/ui/BaseInput.vue'
 import BaseTabs from '@/components/ui/BaseTabs.vue'
 import CopyButton from '@/components/ui/CopyButton.vue'
-import Field from '@/components/ui/Field.vue'
 
 const fromBase = ref('10')
 const raw = ref('1024')

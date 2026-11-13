@@ -114,7 +114,7 @@ export default defineConfig(({ mode }) => {
           id: base,
           name: 'ZT 工具箱',
           short_name: '工具箱',
-          description: '纯本地运行的中文在线工具箱，开发调试、站长网络、内容创作、计算换算。',
+          description: '纯本地运行的中文在线工具箱，开发调试、站长网络、内容创作、计算换算、生活实用、学习教育。',
           start_url: base,
           scope: base,
           display: 'standalone',
@@ -169,7 +169,7 @@ export default defineConfig(({ mode }) => {
             },
             {
               // 第三方接口永不缓存：避免隐私数据落盘与过期结果
-              urlPattern: ({ url }) => url.origin !== self.location.origin,
+              urlPattern: ({ sameOrigin }) => !sameOrigin,
               handler: 'NetworkOnly',
             },
           ],

@@ -1,6 +1,6 @@
 import { defineComponent, h, type Component } from 'vue'
-import { CATEGORIES } from './config'
-import type { ToolCategory, ToolCategoryId, ToolDefinition, ToolMeta, ToolKind } from './types'
+import { CATEGORIES, CATEGORY_IDS, type ToolCategory, type CategoryId } from './categories'
+import type { ToolDefinition, ToolMeta, ToolKind } from './types'
 
 type Globbed<T> = Record<string, T>
 
@@ -30,6 +30,7 @@ const TEMPLATES: Record<ToolKind, () => Promise<{ default: Component }>> = {
   generator: () => import('../components/templates/GeneratorTool.vue'),
   lookup: () => import('../components/templates/LookupTool.vue'),
   calc: () => import('../components/templates/CalcTool.vue'),
+  'file-op': () => import('../components/templates/FileOpTool.vue'),
 }
 
 /**
@@ -73,16 +74,25 @@ export const ALL_TOOLS: ToolDefinition[] = defs
 export const VISIBLE_TOOLS: ToolDefinition[] = defs.filter((d) => !d.meta.hidden)
 export const TOOL_MAP = new Map(defs.map((d) => [d.meta.id, d]))
 
-export const TOOLS_BY_CATEGORY: Record<ToolCategoryId, ToolDefinition[]> = {
-  dev: [],
-  webmaster: [],
-  content: [],
-  calc: [],
-}
+/**
+ * 分类分组。键由 CATEGORY_IDS 生成，所以新增分类只需要改 categories.ts。
+ * 遇到未登记的分类直接报错——宁可打红字也不能静默丢工具。
+ */
+const buckets = new Map<CategoryId, ToolDefinition[]>(CATEGORY_IDS.map((id) => [id, []]))
 for (const d of VISIBLE_TOOLS) {
-  TOOLS_BY_CATEGORY[d.meta.category]?.push(d)
+  const bucket = buckets.get(d.meta.category)
+  if (!bucket) {
+    console.error(
+      `[registry] 工具「${d.meta.id}」的 category「${d.meta.category}」未在 src/core/categories.ts 登记，已跳过`,
+    )
+    continue
+  }
+  bucket.push(d)
 }
-for (const list of Object.values(TOOLS_BY_CATEGORY)) {
+
+export const TOOLS_BY_CATEGORY = Object.fromEntries(buckets) as Record<CategoryId, ToolDefinition[]>
+
+for (const list of buckets.values()) {
   list.sort((a, b) => (a.meta.order ?? 99) - (b.meta.order ?? 99) || a.meta.title.localeCompare(b.meta.title, 'zh'))
 }
 
@@ -97,6 +107,11 @@ export const CATEGORIES_WITH_TOOLS: CategoryWithTools[] = CATEGORIES.slice()
 
 /** 按分类顺序铺平的全部工具，首页与搜索默认用这个顺序 */
 export const SORTED_TOOLS: ToolDefinition[] = CATEGORIES_WITH_TOOLS.flatMap((c) => c.tools)
+
+/** 站点文案里的数字统一从这里取，避免到处手写 120 */
+export const TOOL_COUNT = VISIBLE_TOOLS.length
+export const NETWORK_TOOL_COUNT = VISIBLE_TOOLS.filter((d) => d.meta.privacy === 'network').length
+export const LOCAL_TOOL_COUNT = TOOL_COUNT - NETWORK_TOOL_COUNT
 
 export function getTool(id: string): ToolDefinition | undefined {
   return TOOL_MAP.get(id)

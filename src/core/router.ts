@@ -1,8 +1,9 @@
-import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import { APP_NAME, CATEGORIES } from './config'
 import { VISIBLE_TOOLS } from './registry'
 import { CLAIMS_NO_ADS } from './site-config'
 import { getGuide } from '@/content/guides'
+import { getTopic } from '@/content/topics'
 import { getTool } from './registry'
 
 const routes: RouteRecordRaw[] = [
@@ -10,6 +11,8 @@ const routes: RouteRecordRaw[] = [
   { path: '/c/:cat', name: 'category', component: () => import('../pages/Category.vue'), props: true },
   { path: '/guides', name: 'guides', component: () => import('../pages/Guides.vue') },
   { path: '/guides/:slug', name: 'guide', component: () => import('../pages/GuideView.vue'), props: true },
+  { path: '/topics', name: 'topics', component: () => import('../pages/Topics.vue') },
+  { path: '/topics/:id', name: 'topic', component: () => import('../pages/TopicView.vue'), props: true },
   { path: '/tools/:id', name: 'tool', component: () => import('../pages/ToolView.vue'), props: true },
   { path: '/settings', name: 'settings', component: () => import('../pages/Settings.vue') },
   { path: '/about', name: 'about', component: () => import('../pages/About.vue') },
@@ -20,8 +23,9 @@ const routes: RouteRecordRaw[] = [
 ]
 
 export const router = createRouter({
-  // hash 模式：GitHub Pages / EdgeOne Pages / Workers 三平台零配置
-  history: createWebHashHistory(import.meta.env.BASE_URL),
+  // history 模式：每个页面都有独立地址。三个部署目标都要开 SPA 回退
+  // （Workers 用 not_found_handling，EdgeOne 用 404.html，GitHub Pages 用 404.html）
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
   scrollBehavior: () => ({ top: 0 }),
 })
@@ -38,6 +42,10 @@ router.afterEach((to) => {
   else if (to.name === 'guide') {
     const g = getGuide(String(to.params.slug ?? ''))
     document.title = g ? `${g.title} · ${APP_NAME}` : `使用指南 · ${APP_NAME}`
+  } else if (to.name === 'topics') document.title = `专题 · ${APP_NAME}`
+  else if (to.name === 'topic') {
+    const t = getTopic(String(to.params.id ?? ''))
+    document.title = t ? `${t.title} · ${APP_NAME}` : `专题 · ${APP_NAME}`
   } else if (to.name === 'settings') document.title = `设置 · ${APP_NAME}`
   else if (to.name === 'about') document.title = `关于 · ${APP_NAME}`
   else if (to.name === 'privacy') document.title = `隐私说明 · ${APP_NAME}`
@@ -45,13 +53,15 @@ router.afterEach((to) => {
   else if (to.name === 'contact') document.title = `联系与反馈 · ${APP_NAME}`
   else document.title = `页面不存在 · ${APP_NAME}`
 
-  syncCanonical()
+  syncCanonical(to.path)
   syncDescription(tool?.meta.summary)
 })
 
-/** Hash 路由下所有页面共用同一个可索引地址，canonical 固定指向站点根 */
-function syncCanonical(): void {
-  const href = `${location.origin}${import.meta.env.BASE_URL}`
+/** history 路由下每个页面都是独立地址，canonical 指向自身 */
+function syncCanonical(path: string): void {
+  const base = import.meta.env.BASE_URL.replace(/\/+$/, '')
+  const clean = path.replace(/\/+$/, '')
+  const href = clean ? `${location.origin}${base}${clean}` : `${location.origin}${base}/`
   let link = document.querySelector<HTMLLinkElement>('link[rel="canonical"]')
   if (!link) {
     link = document.createElement('link')

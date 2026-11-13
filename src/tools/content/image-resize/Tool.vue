@@ -7,7 +7,6 @@ import BaseSelect from '@/components/ui/BaseSelect.vue'
 import BaseSwitch from '@/components/ui/BaseSwitch.vue'
 import FileDropZone from '@/components/ui/FileDropZone.vue'
 import Field from '@/components/ui/Field.vue'
-import { toastError } from '@/core/toast'
 
 const files = ref<File[]>([])
 const items = ref<ResizedItem[]>([])
